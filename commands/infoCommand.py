@@ -19,7 +19,11 @@ def handle_info(args):
         
         data = response.json()
         
-        if not data.get("online", False):
+        if "online" not in data:
+            print(f"  {COLOR.RED}[❌ Error] Missing 'online' key in response.{COLOR.RESET}\n")
+            return
+
+        if not data["online"]:  # Accès direct sans `get()`
             print(f"  {COLOR.RED}[❌ Error] The server {server} is offline.{COLOR.RESET}\n")
             return
         
