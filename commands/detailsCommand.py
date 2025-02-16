@@ -22,7 +22,7 @@ def handle_details(args):
     # Encodage du filtre JSON pour l'API
     query = json.dumps({"ip": server_ip})
     encoded_query = urllib.parse.quote(query)
-    url = f"https://api.cornbread2100.com/servers?limit=10&query={encoded_query}"
+    url = f"https://api.cornbread2100.com/servers?limit=100&query={encoded_query}"
 
     try:
         print(f"\n  {COLOR.GRAY}[{COLOR.RED}#{COLOR.GRAY}]{COLOR.WHITE} Fetching server details for {COLOR.NEON_GREEN}{server_ip}{COLOR.RESET}...\n")

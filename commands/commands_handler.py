@@ -6,6 +6,7 @@ from modules.headerModule import display_header
 from commands.infoCommand import handle_info
 from commands.detailsCommand import handle_details
 from commands.helpCommand import show_help
+from commands.searchCommand import handle_search
 
 def handle_command(command):
     parts = command.split()
@@ -21,6 +22,8 @@ def handle_command(command):
         handle_info(args)
     elif cmd == "details":
         handle_details(args)
+    elif cmd == "search":
+        handle_search(args)
     elif cmd == "clear":
         display_header()
     elif cmd == "exit":

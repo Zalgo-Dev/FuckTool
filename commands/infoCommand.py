@@ -66,11 +66,12 @@ def handle_info(args):
         else:
             print(f"  ❌ {COLOR.BOLD}No mods detected.{COLOR.RESET}")
 
-        # 🛠️ Affichage des plugins installés
+        # 🛠️ Affichage des plugins installés avec tri alphabétique
         if plugins:
-            print(f"\n  🛠️ {COLOR.BOLD}Plugins Installed ({len(plugins)}):{COLOR.RESET}")
+            plugins_sorted = sorted(plugins, key=lambda x: x.get("name", "").lower())  # Tri alphabétique
+            print(f"\n  🛠️ {COLOR.BOLD}Plugins Installed ({len(plugins_sorted)}):{COLOR.RESET}")
             print(f"  {'-' * 50}")
-            for plugin in plugins:
+            for plugin in plugins_sorted:
                 plugin_name = plugin.get("name", "Unknown")
                 plugin_version = plugin.get("version", "Unknown")
                 print(f"    📦 {COLOR.LIGHT_BLUE}{plugin_name} {COLOR.GRAY}- {COLOR.YELLOW}v{plugin_version}{COLOR.RESET}")
@@ -88,7 +89,7 @@ def handle_info(args):
                 print(f"    👤 {COLOR.LIGHT_GREEN}{player_name}{COLOR.RESET} ({COLOR.GRAY}{player_uuid}{COLOR.RESET})")
             print(f"  {'-' * 50}")
         else:
-            print(f"  ❌ {COLOR.BOLD}No players currently online.{COLOR.RESET}\n")
+            print(f"  ❌ {COLOR.BOLD}No players currently detected.{COLOR.RESET}\n")
 
     except requests.exceptions.RequestException as e:
         print(f"  {COLOR.RED}[❌ Error] Failed to connect to API: {e}{COLOR.RESET}\n")
