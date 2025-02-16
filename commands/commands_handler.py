@@ -6,7 +6,7 @@ from modules.headerModule import display_header
 from commands.infoCommand import handle_info
 from commands.detailsCommand import handle_details
 from commands.helpCommand import show_help
-from commands.searchCommand import handle_search
+from commands.scanCommand import handle_search
 
 def handle_command(command):
     parts = command.split()
