@@ -1,6 +1,6 @@
 from modules.colorsModule import COLOR
 
-def show_help():
+def handle_help():
     print(f"")
     print(f" {COLOR.NEON_RED}┌{'─' * 90}┐")
     print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.LIGHT_RED}MCPFuckTool - Command Help{COLOR.RESET} {' ' * 60} {COLOR.NEON_RED}│")

@@ -1,0 +1,15 @@
+{
+  "name": "fuckbot",
+  "version": "1.0.0",
+  "description": "fucktool bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ZalgoDev",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "minecraft-protocol": "^1.54.0"
+  }
+}

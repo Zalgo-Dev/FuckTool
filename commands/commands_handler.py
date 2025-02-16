@@ -5,7 +5,11 @@ from modules.colorsModule import COLOR
 from modules.headerModule import display_header
 from commands.infoCommand import handle_info
 from commands.detailsCommand import handle_details
-from commands.helpCommand import show_help
+from commands.helpCommand import handle_help
+
+def get_all_commands():
+    """Retourne toutes les commandes disponibles pour la complétion"""
+    return ["help", "info", "details", "clear", "exit"]
 
 def handle_command(command):
     parts = command.split()
@@ -16,7 +20,7 @@ def handle_command(command):
     args = parts[1:]
 
     if cmd == "help":
-        show_help()
+        handle_help()
     elif cmd == "info":
         handle_info(args)
     elif cmd == "details":
@@ -24,7 +28,7 @@ def handle_command(command):
     elif cmd == "clear":
         display_header()
     elif cmd == "exit":
-        print(f"{COLOR.RED}\n  {COLOR.NEON_RED}[{COLOR.WHITE}!{COLOR.NEON_RED}] {COLOR.LIGHT_RED}Exiting MCPFuckTool...{COLOR.RESET}")
+        print(f"{COLOR.RED}\n  {COLOR.NEON_RED}[{COLOR.WHITE}!{COLOR.NEON_RED}] {COLOR.WHITE}Exiting {COLOR.NEON_RED}Fuck{COLOR.WHITE}Tool...{COLOR.RESET}")
         time.sleep(1)
         os.system('cls' if os.name == 'nt' else 'clear')
         sys.exit(0)

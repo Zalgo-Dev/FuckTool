@@ -9,7 +9,7 @@ class COLOR:
     REVERSE = "\033[7m"
     HIDDEN = "\033[8m"
 
-    # ⚪ Blanc & Gris (Clair → Foncé)
+    # ⚪ White and gray
     BRIGHT_WHITE = "\033[97m"
     WHITE = "\033[37m"
     LIGHT_GRAY = "\033[37m"
@@ -19,14 +19,14 @@ class COLOR:
     BRIGHT_BLACK = "\033[90m"
     BLACK = "\033[30m"
 
-    # 🔴 Rouge (Clair → Foncé)
+    # 🔴 Red
     LIGHT_RED = "\033[38;5;203m"
     BRIGHT_RED = "\033[91m"
     NEON_RED = "\033[38;5;196m"
     RED = "\033[31m"
     DARK_RED = "\033[38;5;124m"
 
-    # 🟢 Vert (Clair → Foncé)
+    # 🟢 Green
     LIGHT_GREEN = "\033[92m"
     BRIGHT_GREEN = "\033[92m"
     NEON_GREEN = "\033[38;5;46m"
@@ -34,7 +34,7 @@ class COLOR:
     GREEN = "\033[32m"
     DARK_GREEN = "\033[38;5;28m"
 
-    # 🟡 Jaune (Clair → Foncé)
+    # 🟡 Yellow
     LIGHT_YELLOW = "\033[38;5;228m"
     BRIGHT_YELLOW = "\033[93m"
     NEON_YELLOW = "\033[38;5;226m"
@@ -42,7 +42,7 @@ class COLOR:
     GOLD = "\033[38;5;214m"
     DARK_YELLOW = "\033[38;5;136m"
 
-    # 🟠 Orange (Clair → Foncé)
+    # 🟠 Orange
     LIGHT_ORANGE = "\033[38;5;215m"
     BRIGHT_ORANGE = "\033[38;5;214m"
     NEON_ORANGE = "\033[38;5;202m"
@@ -50,7 +50,7 @@ class COLOR:
     SUNSET_ORANGE = "\033[38;5;166m"
     DARK_ORANGE = "\033[38;5;130m"
 
-    # 🔵 Bleu (Clair → Foncé)
+    # 🔵 Blue
     SKY_BLUE = "\033[38;5;117m"
     LIGHT_BLUE = "\033[94m"
     BRIGHT_BLUE = "\033[94m"
@@ -59,7 +59,7 @@ class COLOR:
     BLUE = "\033[34m"
     DARK_BLUE = "\033[38;5;19m"
 
-    # 🟣 Violet / Magenta (Clair → Foncé)
+    # 🟣 Purple
     PINK = "\033[38;5;205m"
     MAGENTA = "\033[38;5;200m"
     LIGHT_PURPLE = "\033[95m"
@@ -68,7 +68,7 @@ class COLOR:
     PURPLE = "\033[35m"
     DARK_PURPLE = "\033[38;5;54m"
 
-    # 🟦 Cyan (Clair → Foncé)
+    # 🟦 Cyan
     AQUA = "\033[38;5;14m"
     LIGHT_CYAN = "\033[38;5;51m"
     BRIGHT_CYAN = "\033[96m"
