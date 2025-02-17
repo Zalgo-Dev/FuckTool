@@ -30,12 +30,13 @@ echo.
 echo Do you want to install FuckTool ?
 echo.
 echo [I] Install
+echo [U] Uninstall
 echo [X] Exit
 echo.
 
-choice /T 60 /C IX /D X /N /M "Choose an option: "
+choice /T 60 /C IUX /D X /N /M "Choose an option: "
 
-if %errorlevel% EQU 2 (
+if %errorlevel% EQU 3 (
     cls
     echo Installation cancelled.
     echo Exiting FuckTool Installer.
@@ -44,16 +45,44 @@ if %errorlevel% EQU 2 (
 
 set "INSTALL_DIR=%USERPROFILE%\FuckTool"
 
-echo Installing FuckTool...
-
-if exist "%INSTALL_DIR%" (
-    echo FuckTool is already installed.
-    echo Installation cancelled.
-    echo Exiting FuckTool Installer.
+if %errorlevel% EQU 2 (
+    cls
+    echo ========================================
+    echo =          FuckTool Uninstaller       =
+    echo ========================================
+    echo.
+    
+    if not exist "%INSTALL_DIR%" (
+        echo FuckTool is not installed.
+        echo Exiting uninstaller.
+        pause
+        exit /b
+    )
+    
+    echo Removing FuckTool...
+    
+    :: Supprimer le dossier d'installation
+    rmdir /s /q "%INSTALL_DIR%" >nul 2>&1
+    
+    :: Supprimer le raccourci du bureau
+    if exist "%USERPROFILE%\Desktop\FuckTool.lnk" (
+        del "%USERPROFILE%\Desktop\FuckTool.lnk" >nul 2>&1
+    )
+    
+    echo Uninstallation complete!
+    pause
     exit /b
 )
 
+echo Installing FuckTool...
+
+if exist "%INSTALL_DIR%" (
+    echo Removing previous installation...
+    rmdir /s /q "%INSTALL_DIR%" >nul 2>&1
+)
+
 :makeInstallDir
+echo Creation of the main folder : %INSTALL_DIR%
 mkdir "%INSTALL_DIR%" 2>nul
 mkdir %INSTALL_DIR%\commands %INSTALL_DIR%\modules
 
@@ -114,6 +143,9 @@ powershell -Command "(New-Object System.Net.WebClient).DownloadFile('https://raw
 
 :: Ico
 powershell -Command "(New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/Zalgo-Dev/FuckTool/refs/heads/main/fucktool.ico', '%INSTALL_DIR%\fucktool.ico')"
+
+timeout /T 3 /NOBREAK
+
 if exist "%INSTALL_DIR%\requirements.txt" (
     echo Installing dependencies...
     python -m pip install -r "%INSTALL_DIR%\requirements.txt"
@@ -123,6 +155,7 @@ if exist "%INSTALL_DIR%\requirements.txt" (
 
 set "SHORTCUT_PATH=%USERPROFILE%\Desktop\FuckTool.lnk"
 set "PYTHON_SCRIPT=%INSTALL_DIR%\main.py"
+set "ICON_PATH=%INSTALL_DIR%\fucktool.ico"
 
 echo Creating desktop shortcut...
 powershell -Command "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%SHORTCUT_PATH%'); $s.TargetPath = 'python'; $s.Arguments = '\"%PYTHON_SCRIPT%\"'; $s.WorkingDirectory = '%INSTALL_DIR%'; $s.IconLocation = '%ICON_PATH%'; $s.Save()"
