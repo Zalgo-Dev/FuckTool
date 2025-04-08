@@ -1,39 +1,17 @@
 import os
 import sys
 import time
-import readline
-
 from modules.colorsModule import COLOR
 from modules.headerModule import display_header
+from modules.historyManager import setup_history
+from modules.readlineSetup import setup_completer
 from commands.commands_handler import get_all_commands, handle_command
 
 BASE_DIR = os.path.dirname(__file__)
-MODULES_DIR = os.path.join(BASE_DIR, "modules")
-COMMANDS_DIR = os.path.join(BASE_DIR, "commands")
-
-for directory in [MODULES_DIR, COMMANDS_DIR]:
-    if directory not in sys.path:
-        sys.path.append(directory)
-
 COMMANDS = get_all_commands()
 
-def completer(text, state):
-    options = [cmd for cmd in COMMANDS if cmd.startswith(text)]
-    return options[state] if state < len(options) else None
-
-readline.parse_and_bind("tab: complete")
-readline.set_completer(completer)
-
-HISTORY_FILE = os.path.join(BASE_DIR, ".mcpfucktool_history")
-
-try:
-    readline.read_history_file(HISTORY_FILE)
-except FileNotFoundError:
-    open(HISTORY_FILE, 'wb').close()
-
-import atexit
-atexit.register(readline.write_history_file, HISTORY_FILE)
-
+setup_completer(COMMANDS)
+setup_history(os.path.join(BASE_DIR, ".fucktool_history"))
 
 def main():
     """Boucle principale du terminal"""
