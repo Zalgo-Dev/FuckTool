@@ -14,20 +14,6 @@ def handle_help():
 
     print(f" {COLOR.NEON_RED}│  {' ' * 86}  │{COLOR.RESET}")
 
-    # Section: Scanning Tools
-    #print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.BOLD}{COLOR.YELLOW}Scanning Tools:{COLOR.RESET} {' ' * 71} {COLOR.NEON_RED}│")
-    #print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}scan <ip> <port> <type>{COLOR.RESET}    ➜ Scan a Minecraft server with a specific scanner {' ' * 8} {COLOR.NEON_RED}│")
-    #print(f" {COLOR.NEON_RED}│{COLOR.RESET}      Available types: {COLOR.CYAN}qubo, old_qubo, nmap, masscan, rustscan{COLOR.RESET} {' ' * 26} {COLOR.NEON_RED}│")
-
-    #print(f" {COLOR.NEON_RED}│  {' ' * 86}  │{COLOR.RESET}")
-
-    # Section: Exploits
-    #print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.BOLD}{COLOR.YELLOW}Exploits:{COLOR.RESET} {' ' * 77} {COLOR.NEON_RED}│")
-    #print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}exploit{COLOR.RESET}                    ➜ Run an exploit {' ' * 41} {COLOR.NEON_RED}│")
-    #print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}list{COLOR.RESET}                       ➜ List available exploits {' ' * 32} {COLOR.NEON_RED}│")
-
-    #print(f" {COLOR.NEON_RED}│  {' ' * 86}  │{COLOR.RESET}")
-
     # Section: Utilities
     print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.BOLD}{COLOR.YELLOW}Utilities:{COLOR.RESET} {' ' * 76} {COLOR.NEON_RED}│")
     print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}clear{COLOR.RESET}                      ➜ Clear the screen {' ' * 39} {COLOR.NEON_RED}│")
