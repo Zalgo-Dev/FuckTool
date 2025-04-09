@@ -1,38 +1,44 @@
 import os
 import shutil
+import getpass
 from modules.colorsModule import COLOR
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def get_terminal_width():
-    return shutil.get_terminal_size().columns
+    try:
+        return shutil.get_terminal_size().columns
+    except:
+        return 80  # Fallback width
 
 def pad_right(text, length):
     return text + " " * max(0, length - len(text))
 
 def display_header():
     clear_screen()
-
+    
+    try:
+        username = getpass.getuser()
+    except:
+        username = "User"
+    
     cols = get_terminal_width()
-    username = os.getlogin()
     user_length = len(username)
     min_box_width = 25
     box_width = max(user_length + 20, min_box_width)
-
     offset = max(0, cols - box_width - 45)
-
-    right_align = offset > 10
-
+    
+    # Pré-calcul des valeurs répétitives
     border = "═" * (box_width - 2)
-    user_padding = " " * max(0, box_width - user_length - 15)
-    plan_padding = " " * max(0, box_width - 19)
-
+    user_pad = box_width - user_length - 14
+    plan_pad = box_width - 25
+    
     header_lines = [
         f"{COLOR.NEON_RED}                                          {' ' * offset}╒{border}╕",
         f"{COLOR.NEON_RED}          ╔═╗╷ ╷╭─┐┬ ╷{COLOR.WHITE}╔╦╗┌─┐┌─┐┬          {COLOR.NEON_RED}{' ' * offset}│{COLOR.WHITE} Account Information {pad_right('', box_width - 23)}{COLOR.NEON_RED}│",
-        f"{COLOR.NEON_RED}          ╠╡ │ ││  ├─╯{COLOR.WHITE} ║ │ ││ ││          {COLOR.NEON_RED}{' ' * offset}│{COLOR.WHITE} Username: {username} {pad_right('', box_width - user_length - 14)}{COLOR.NEON_RED}│",
-        f"{COLOR.NEON_RED}          ╩  ╰─╯╰─┘┴ ╵{COLOR.WHITE} ╩ └─┘└─┘┴─┘        {COLOR.NEON_RED}{' ' * offset}│{COLOR.WHITE} Plan: {COLOR.NEON_YELLOW}TOTALLY FREE 🖕 {pad_right('', box_width - 25)}{COLOR.NEON_RED}│",
+        f"{COLOR.NEON_RED}          ╠╡ │ ││  ├─╯{COLOR.WHITE} ║ │ ││ ││          {COLOR.NEON_RED}{' ' * offset}│{COLOR.WHITE} Username: {username} {pad_right('', user_pad)}{COLOR.NEON_RED}│",
+        f"{COLOR.NEON_RED}          ╩  ╰─╯╰─┘┴ ╵{COLOR.WHITE} ╩ └─┘└─┘┴─┘        {COLOR.NEON_RED}{' ' * offset}│{COLOR.WHITE} Plan: {COLOR.NEON_YELLOW}TOTALLY FREE 🖕 {pad_right('', plan_pad)}{COLOR.NEON_RED}│",
         f"{COLOR.NEON_RED}    ═══╦═══════════════════════════╦═══   {' ' * offset}╘{border}╛",
         f"{COLOR.NEON_RED}  ╒════╩═══════════════════════════╩════╕",
         f"{COLOR.NEON_RED}  │{COLOR.WHITE} Advanced Minecraft Pentesting Tool  {COLOR.NEON_RED}│",
@@ -40,9 +46,6 @@ def display_header():
         f"{COLOR.NEON_RED}  ╘═════════════════════════════════════╛"
     ]
 
-    for line in header_lines:
-        print(line)
-
-    print(f"     {COLOR.WHITE}Hello {COLOR.UNDERLINE}@{username}{COLOR.RESET}. {COLOR.WHITE}Welcome to {COLOR.LIGHT_RED}MCPFuckTool{COLOR.RESET}")
-    print(f"   {COLOR.WHITE}To view available commands, type {COLOR.LIGHT_RED}help{COLOR.RESET}")
-    print(f"")
+    print("\n".join(header_lines))
+    print(f"\n     {COLOR.WHITE}Hello {COLOR.UNDERLINE}@{username}{COLOR.RESET}. {COLOR.WHITE}Welcome to {COLOR.LIGHT_RED}MCPFuckTool{COLOR.RESET}")
+    print(f"   {COLOR.WHITE}To view available commands, type {COLOR.LIGHT_RED}help{COLOR.RESET}\n")
