@@ -48,11 +48,6 @@ class StressTester:
 
 def handle_stress(args):
     """Ethical stress testing command"""
-    if "--legal-confirm" not in args:
-        print(f"{COLOR.RED}This command requires proof of server ownership{COLOR.RESET}")
-        print(f"Usage: stress <ip:port> --layer [4|7] --duration 30")
-        return
-
     tester = StressTester()
     
     try:
