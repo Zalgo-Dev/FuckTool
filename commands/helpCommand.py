@@ -18,6 +18,12 @@ def handle_help(args=None):
     print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.BOLD}{COLOR.YELLOW}Network Tools:{COLOR.RESET} {' ' * 72} {COLOR.NEON_RED}│")
     print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}dns <ip|domain>{COLOR.RESET}            ➜ Perform DNS lookup and show records {' ' * 20} {COLOR.NEON_RED}│")
     print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {' ' * 30} (A, AAAA, MX, TXT, etc.) {' ' * 31} {COLOR.NEON_RED}│")
+    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}stress <ip:port>{COLOR.RESET}           ➜ DDOS {' ' * 51} {COLOR.NEON_RED}│")
+    print(f" {COLOR.NEON_RED}│{COLOR.RESET}    {COLOR.WHITE}--layer 4{COLOR.RESET}                  ➜ TCP SYN flood (transport layer) {' ' * 24} {COLOR.NEON_RED}│")
+    print(f" {COLOR.NEON_RED}│{COLOR.RESET}    {COLOR.WHITE}--layer 7{COLOR.RESET}                  ➜ MC protocol flood (application layer) {' ' * 18} {COLOR.NEON_RED}│")
+    print(f" {COLOR.NEON_RED}│{COLOR.RESET}    {COLOR.WHITE}--duration 30{COLOR.RESET}              ➜ Max test duration (seconds) {' ' * 28} {COLOR.NEON_RED}│")
+
+    print(f" {COLOR.NEON_RED}│  {' ' * 86}  │{COLOR.RESET}")
 
     print(f" {COLOR.NEON_RED}│  {' ' * 86}  │{COLOR.RESET}")
 

@@ -7,10 +7,11 @@ from commands.infoCommand import handle_info
 from commands.detailsCommand import handle_details
 from commands.dnsCommand import handle_dns
 from commands.helpCommand import handle_help
+from commands.stressCommand import handle_stress
 
 def get_all_commands():
     """Retourne toutes les commandes disponibles pour la complétion"""
-    return ["help", "info", "details", "dns", "clear", "exit"]
+    return ["help", "info", "details", "dns", "stress", "clear", "exit"]
 
 def handle_command(command):
     parts = command.split()
@@ -28,6 +29,8 @@ def handle_command(command):
         handle_details(args)
     elif cmd == "dns":
         handle_dns(args)
+    elif cmd == "stress":
+        handle_stress(args)
     elif cmd == "clear":
         display_header()
     elif cmd == "exit":
