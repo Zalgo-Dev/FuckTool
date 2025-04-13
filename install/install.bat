@@ -29,7 +29,7 @@ cls
 :: ========================================
 set "INSTALL_DIR=%USERPROFILE%\FuckTool"
 set "REPO_URL=https://raw.githubusercontent.com/Zalgo-Dev/FuckTool/main/"
-set "PYTHON_URL=https://www.python.org/ftp/python/3.11.4/python-3.11.4-amd64.exe"
+set "PYTHON_URL=https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe"
 
 :: ========================================
 ::          MAIN MENU
@@ -101,7 +101,7 @@ if "%USERNAME%"=="" (
     echo.
     echo [System]
     echo version=2.0
-    echo python_required=3.11+
+    echo python_required=3.12+
 ) > "%INSTALL_DIR%\config.ini"
 
 :: Check Python installation
@@ -116,7 +116,7 @@ if %errorlevel% neq 0 (
 :: Verify Python version
 python -c "import sys; exit(0 if sys.version_info >= (3,11) else 1)" >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [!] Python 3.11+ required
+    echo [!] Python 3.12+ required
     call :install_python
 )
 
@@ -162,7 +162,18 @@ if exist "%INSTALL_DIR%\requirements.txt" (
 
 :: Create desktop shortcut
 echo [+] Creating desktop shortcut...
-powershell -Command "$ws=New-Object -ComObject WScript.Shell; $s=$ws.CreateShortcut('%USERPROFILE%\Desktop\FuckTool.lnk'); $s.TargetPath='python'; $s.Arguments='\"%INSTALL_DIR%\main.py\"'; $s.WorkingDirectory='%INSTALL_DIR%'; $s.IconLocation='%INSTALL_DIR%\fucktool.ico'; $s.Description='FuckTool by ZalgoDev'; $s.Save()"
+echo [+] Creating desktop shortcut...
+powershell -Command ^
+  "$python = (Get-Command python).Source; " ^
+  "$ws = New-Object -ComObject WScript.Shell; " ^
+  "$s = $ws.CreateShortcut('%USERPROFILE%\Desktop\FuckTool.lnk'); " ^
+  "$s.TargetPath = $python; " ^
+  "$s.Arguments = '\"%INSTALL_DIR%\main.py\"'; " ^
+  "$s.WorkingDirectory = '%INSTALL_DIR%'; " ^
+  "$s.IconLocation = '%INSTALL_DIR%\fucktool.ico'; " ^
+  "$s.Description = 'FuckTool by ZalgoDev'; " ^
+  "$s.Save()"
+
 
 :: Final message
 cls
@@ -175,7 +186,6 @@ echo.
 echo Launch options:
 echo 1. Double-click desktop shortcut
 echo 2. Run: python "%INSTALL_DIR%\main.py"
-echo 3. Navigate to %INSTALL_DIR% and run
 echo.
 pause
 exit /b
@@ -184,7 +194,7 @@ exit /b
 ::          SUBROUTINES
 :: ========================================
 :install_python
-echo [+] Installing Python 3.11...
+echo [+] Installing Python 3.12...
 echo [.] Downloading installer...
 powershell -Command "(New-Object Net.WebClient).DownloadFile('%PYTHON_URL%', '%TEMP%\python_installer.exe')"
 
