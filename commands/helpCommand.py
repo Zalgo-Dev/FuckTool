@@ -3,7 +3,7 @@ from modules.colorsModule import COLOR
 def handle_help(args=None):
     print(f"")
     print(f" {COLOR.NEON_RED}┌{'─' * 90}┐")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.LIGHT_RED}FuckTool - Command Help{COLOR.RESET} {' ' * 60} {COLOR.NEON_RED}│")
+    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.LIGHT_RED}FuckTool - Command Help{COLOR.RESET} {' ' * 63} {COLOR.NEON_RED}│")
     print(f" {COLOR.NEON_RED}├{'─' * 90}┤")
 
     # Section: Server Information
