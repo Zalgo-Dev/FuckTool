@@ -1,11 +1,11 @@
-MCPFuckTool License - Strictly for MCPFuckTool Use Only
+FuckTool License
 
 Copyright (c) 2025 ZalgoDev
 
 ---
 
 ### 🔹 **1. Utilisation autorisée**
-- Ce logiciel peut être utilisé **uniquement dans le cadre de MCPFuckTool**.
+- Ce logiciel peut être utilisé **uniquement dans le cadre de FuckTool**.
 
 ---
 
@@ -21,7 +21,7 @@ Copyright (c) 2025 ZalgoDev
 ### 🔹 **3. Contribution**
 - ✅ **Les contributions sont acceptées**, mais **chaque modification doit être soumise** à l’auteur pour validation.
 - ✅ Les contributeurs **ne deviennent pas propriétaires** du code qu'ils soumettent.
-- ✅ Toute contribution acceptée devient **propriété de MCPFuckTool**.
+- ✅ Toute contribution acceptée devient **propriété de FuckTool**.
 
 ---
 
