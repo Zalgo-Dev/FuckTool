@@ -19,6 +19,10 @@
 - 🎨 Interface console stylisée
 
 ---
+<p align="center">
+  <img src="https://i.imgur.com/83px7rZ.png" alt="Aperçu" width="700"/>
+</p>
+---
 
 ## 🛠️ Installation
 
@@ -87,8 +91,7 @@ FuckTool/
 │   │   ├── header.py
 │   │   ├── input_manager.py
 │   ├── resources/
-│   │   ├── fucktool.ico
-│   │   └── install.bat
+│   │   └── fucktool.ico
 │   ├── __init__.py
 │   ├── .fucktool_history
 │   └── main.py
