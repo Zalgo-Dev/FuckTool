@@ -1,0 +1,48 @@
+config-version = "2.7"
+bind = "0.0.0.0:25577"
+motd = "<#09add3>A Velocity Server"
+show-max-players = 500
+online-mode = false
+force-key-authentication = true
+prevent-client-proxy-connections = false
+player-info-forwarding-mode = "none"
+forwarding-secret-file = "forwarding.secret"
+announce-forge = false
+kick-existing-players = false
+ping-passthrough = "DISABLED"
+enable-player-address-logging = true
+log-commands = true
+log-connections = true
+
+[servers]
+lobby = "spymc.xyz"
+
+[forced-hosts]
+"46.10.132.10" = [ "lobby",]
+"spymc.xyz" = [ "lobby",]
+
+[advanced]
+compression-threshold = 256
+compression-level = -1
+login-ratelimit = 0
+connection-timeout = 0
+read-timeout = 30000
+haproxy-protocol = false
+tcp-fast-open = false
+bungee-plugin-message-channel = true
+show-ping-requests = false
+failover-on-unexpected-server-disconnect = true
+announce-proxy-commands = true
+log-command-executions = true
+log-player-connections = true
+accepts-transfers = false
+enable-reuse-port = false
+
+[query]
+enabled = false
+port = 25565
+map = "Velocity"
+show-plugins = false
+
+[metrics]
+enabled = false
