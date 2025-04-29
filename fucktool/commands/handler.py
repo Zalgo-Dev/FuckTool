@@ -11,7 +11,7 @@ from commands.stress import handle_stress
 
 def get_all_commands():
     """Retourne toutes les commandes disponibles pour la complétion"""
-    return ["help", "info", "details", "dns", "stress", "clear", "exit"]
+    return ["help", "info", "details", "dns", "fakeproxy" "stress", "clear", "exit"]
 
 def handle_command(command):
     parts = command.split()
@@ -31,6 +31,8 @@ def handle_command(command):
         handle_dns(args)
     elif cmd == "stress":
         handle_stress(args)
+    elif cmd == "fakeproxy":
+        fakeproxy.main_fakeproxy(parts)
     elif cmd == "clear":
         display_header()
     elif cmd == "exit":
