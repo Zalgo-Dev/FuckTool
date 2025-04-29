@@ -2,10 +2,9 @@ import os
 import subprocess
 import platform
 import toml
-from modules.colors import Color
+from core.colors import COLOR
 from colorama import init, Fore, Back, Style
 from time import sleep
-from win10toast import ToastNotifier
 from time import strftime
 import re
 
@@ -141,7 +140,7 @@ def extract_velocity_log(line):
         return f"{White}{Bold}[{Reset}{Green}{Bold}#{Reset}{White}{Bold}][{timestamp}] FakeProxy Log - {user} ({ip}) executed command {Bold}{Green}{command} {Reset} on the fakeproxy!"
     
     return None  # No matching log format
-from win10toast import ToastNotifier  # Importing win10toast for Windows notifications
+
 
 def run_velocity():
     """Runs the Velocity proxy and captures logs."""
@@ -177,13 +176,6 @@ def run_velocity():
             custom_log = extract_velocity_log(line)
             if "Done" in line:
                 print(format_log("Velocity Proxy Started Successfully!"))
-                
-                # Show a toast notification when Velocity proxy starts
-                toaster.show_toast(
-                    "DeathenTool - FakeProxy",  # Title of the notification
-                    f"Your FakeProxy Successfully Started on {public_ip} !",  # Notification message
-                    duration=10  # Duration in seconds
-                )
 
             if custom_log:
                 print(custom_log)  # Print only relevant logs
