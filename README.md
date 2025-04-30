@@ -19,9 +19,7 @@
 - 🎨 Interface console stylisée
 
 ---
-<p align="center">
-  <img src="https://i.imgur.com/83px7rZ.png" alt="Aperçu" width="700"/>
-</p>
+![image](https://github.com/user-attachments/assets/6ff708cd-d4ae-433a-a1c7-d54e4a790384)
 ---
 
 ## 🛠️ Installation
