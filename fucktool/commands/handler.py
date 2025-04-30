@@ -4,6 +4,7 @@ import time
 from core.colors import COLOR
 from core.header import display_header
 from commands.details import handle_details
+from commands.fakeproxy import main_fakeproxy
 from commands.dns import handle_dns
 from commands.help import handle_help
 from commands.info import handle_info
@@ -11,7 +12,8 @@ from commands.stress import handle_stress
 
 def get_all_commands():
     """Retourne toutes les commandes disponibles pour la complétion"""
-    return ["clear", "details", "dns", "exit", "help", "info", "stress"]
+
+    return ["clear", "details", "dns", "exit", "fakeproxy", "help", "info", "stress"]
 
 def handle_command(command):
     parts = command.split()
@@ -27,6 +29,10 @@ def handle_command(command):
         handle_details(args)
     elif cmd == "dns":
         handle_dns(args)
+    elif cmd == "stress":
+        handle_stress(args)
+    elif cmd == "fakeproxy":
+        main_fakeproxy(parts)
     elif cmd == "exit":
         print(f"\n {COLOR.NEON_RED}[{COLOR.WHITE}!{COLOR.NEON_RED}] {COLOR.WHITE}Exiting {COLOR.NEON_RED}Fuck{COLOR.WHITE}Tool...{COLOR.RESET}")
         time.sleep(1)
@@ -36,8 +42,6 @@ def handle_command(command):
         handle_help()
     elif cmd == "info":
         handle_info(args)
-    elif cmd == "stress":
-        handle_stress(args)
     else:
         print(f"")
         print(f"  {COLOR.YELLOW}[Error] Unknown command: \"{cmd}\"{COLOR.RESET}")
