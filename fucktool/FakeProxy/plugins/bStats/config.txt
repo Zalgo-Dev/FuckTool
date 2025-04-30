@@ -3,7 +3,7 @@
 # bStats enabled, but if you're not comfortable with this, you can turn this setting off.
 # There is no performance penalty associated with having metrics enabled, and data sent to
 # bStats is fully anonymous.
-enabled=true
+enabled=false
 server-uuid=bc81a07c-3e23-406e-b50f-18194b284043
 log-errors=false
 log-sent-data=false

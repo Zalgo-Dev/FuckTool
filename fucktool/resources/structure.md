@@ -6,6 +6,7 @@
             └── __init__.py
             └── details.py
             └── dns.py
+            └── fakeproxy.py
             └── handler.py
             └── help.py
             └── info.py
@@ -15,11 +16,19 @@
             └── colors.py
             └── header.py
             └── input_manager.py
+        └── 📁FakeProxy
+            └── forwarding.secret
+            └── 📁plugins
+                └── 📁bStats
+                    └── config.txt
+                └── FakeProxyAdmin-1.2.1.jar
+            └── velocity.jar
+            └── velocity.toml
         └── main.py
         └── 📁resources
             └── fucktool.ico
             └── install.bat
-    └── install.bat
+            └── structure.md
     └── LICENSE.md
     └── README.md
     └── requirements.txt
