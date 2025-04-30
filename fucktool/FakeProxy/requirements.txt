@@ -1,0 +1,6 @@
+requests
+toml
+mcstatus
+colorama
+sys
+dnspython
