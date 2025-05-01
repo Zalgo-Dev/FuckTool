@@ -5,7 +5,7 @@ show-max-players = 500
 online-mode = false
 force-key-authentication = true
 prevent-client-proxy-connections = false
-player-info-forwarding-mode = "none"
+player-info-forwarding-mode = "legacy"
 forwarding-secret-file = "forwarding.secret"
 announce-forge = false
 kick-existing-players = false
@@ -15,11 +15,11 @@ log-commands = true
 log-connections = true
 
 [servers]
-lobby = "spymc.xyz"
+lobby = "play.callofcube.fr"
 
 [forced-hosts]
 Set-Lobby = [ "lobby",]
-"spymc.xyz" = [ "lobby",]
+"play.callofcube.fr" = [ "lobby",]
 
 [advanced]
 compression-threshold = 256
