@@ -4,4 +4,4 @@ class Config:
     """
 
     # Application settings
-    DEBUG = True  # ou False
+    DEBUG = False  # True or False

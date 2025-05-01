@@ -82,6 +82,7 @@ echo [+] Downloading files...
 :: Main files
 powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/main.py', '%INSTALL_DIR%\fucktool\main.py')"
 powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/__init__.py', '%INSTALL_DIR%\fucktool\__init__.py')"
+powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/config.py', '%INSTALL_DIR%\fucktool\config.py')"
 
 :: Commands
 for %%f in (__init__.py details.py dns.py fakeproxy.py handler.py help.py info.py stress.py) do (
@@ -90,7 +91,7 @@ for %%f in (__init__.py details.py dns.py fakeproxy.py handler.py help.py info.p
 )
 
 :: Core
-for %%f in (__init__.py colors.py header.py input_manager.py) do (
+for %%f in (__init__.py colors.py debug.py header.py input_manager.py) do (
     echo [.] core/%%f
     powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/core/%%f', '%INSTALL_DIR%\fucktool\core\%%f')"
 )
