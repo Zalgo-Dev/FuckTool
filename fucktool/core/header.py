@@ -1,7 +1,7 @@
 import os
 import shutil
 import getpass
-from core.colors import COLOR
+from core.colors import WHITE, NEON_RED, UNDERLINE, RESET, LIGHT_RED, NEON_YELLOW
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -35,17 +35,17 @@ def display_header():
     plan_pad = box_width - 25
     
     header_lines = [
-        f"{COLOR.NEON_RED}                                          {' ' * offset}╒{border}╕",
-        f"{COLOR.NEON_RED}          ╔═╗╷ ╷╭─┐┬ ╷{COLOR.WHITE}╔╦╗┌─┐┌─┐┬          {COLOR.NEON_RED}{' ' * offset}│{COLOR.WHITE} Account Information {pad_right('', box_width - 23)}{COLOR.NEON_RED}│",
-        f"{COLOR.NEON_RED}          ╠╡ │ ││  ├─╯{COLOR.WHITE} ║ │ ││ ││          {COLOR.NEON_RED}{' ' * offset}│{COLOR.WHITE} Username: {username} {pad_right('', user_pad)}{COLOR.NEON_RED}│",
-        f"{COLOR.NEON_RED}          ╩  ╰─╯╰─┘┴ ╵{COLOR.WHITE} ╩ └─┘└─┘┴─┘        {COLOR.NEON_RED}{' ' * offset}│{COLOR.WHITE} Plan: {COLOR.NEON_YELLOW}TOTALLY FREE 🖕 {pad_right('', plan_pad)}{COLOR.NEON_RED}│",
-        f"{COLOR.NEON_RED}    ═══╦═══════════════════════════╦═══   {' ' * offset}╘{border}╛",
-        f"{COLOR.NEON_RED}  ╒════╩═══════════════════════════╩════╕",
-        f"{COLOR.NEON_RED}  │{COLOR.WHITE} Advanced Minecraft Pentesting Tool  {COLOR.NEON_RED}│",
-        f"{COLOR.NEON_RED}  │{COLOR.WHITE}            By ZalgoDev              {COLOR.NEON_RED}│",
-        f"{COLOR.NEON_RED}  ╘═════════════════════════════════════╛"
+        f"{NEON_RED}                                          {' ' * offset}╒{border}╕",
+        f"{NEON_RED}          ╔═╗╷ ╷╭─┐┬ ╷{WHITE}╔╦╗┌─┐┌─┐┬          {NEON_RED}{' ' * offset}│{WHITE} Account Information {pad_right('', box_width - 23)}{NEON_RED}│",
+        f"{NEON_RED}          ╠╡ │ ││  ├─╯{WHITE} ║ │ ││ ││          {NEON_RED}{' ' * offset}│{WHITE} Username: {username} {pad_right('', user_pad)}{NEON_RED}│",
+        f"{NEON_RED}          ╩  ╰─╯╰─┘┴ ╵{WHITE} ╩ └─┘└─┘┴─┘        {NEON_RED}{' ' * offset}│{WHITE} Plan: {NEON_YELLOW}TOTALLY FREE 🖕 {pad_right('', plan_pad)}{NEON_RED}│",
+        f"{NEON_RED}    ═══╦═══════════════════════════╦═══   {' ' * offset}╘{border}╛",
+        f"{NEON_RED}  ╒════╩═══════════════════════════╩════╕",
+        f"{NEON_RED}  │{WHITE} Advanced Minecraft Pentesting Tool  {NEON_RED}│",
+        f"{NEON_RED}  │{WHITE}            By ZalgoDev              {NEON_RED}│",
+        f"{NEON_RED}  ╘═════════════════════════════════════╛"
     ]
 
     print("\n".join(header_lines))
-    print(f"\n     {COLOR.WHITE}Hello {COLOR.UNDERLINE}@{username}{COLOR.RESET}. {COLOR.WHITE}Welcome to {COLOR.LIGHT_RED}FuckTool{COLOR.RESET}")
-    print(f"   {COLOR.WHITE}To view available commands, type {COLOR.LIGHT_RED}help{COLOR.RESET}\n")
+    print(f"\n     {WHITE}Hello {UNDERLINE}@{username}{RESET}. {WHITE}Welcome to {LIGHT_RED}FuckTool{RESET}")
+    print(f"   {WHITE}To view available commands, type {LIGHT_RED}help{RESET}\n")
