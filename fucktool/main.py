@@ -3,8 +3,9 @@ import sys
 import time
 from pathlib import Path
 
-from core.colors import COLOR
+from core.colors import NEON_RED, WHITE, RESET
 from core.header import display_header
+from core.debug import handle_exception, debug_print
 from commands.handler import get_all_commands, handle_command
 
 # Nouvelle importation du système d'input amélioré
@@ -14,12 +15,14 @@ try:
 except ImportError:
     USE_PROMPT_TOOLKIT = False
 
+
 def main():
     """Boucle principale du terminal"""
     BASE_DIR = Path(__file__).parent
     COMMANDS = get_all_commands()
 
     display_header()
+    debug_print(f"Debug mode enabled.\n")
 
     try:
         while True:
@@ -27,17 +30,17 @@ def main():
                 if USE_PROMPT_TOOLKIT:
                     command = get_command_input(COMMANDS).strip().lower()
                 else:
-                    command = input(f"{COLOR.NEON_RED} [{COLOR.WHITE}>{COLOR.NEON_RED}] {COLOR.RESET}").strip().lower()
+                    command = input(f"{NEON_RED} [{WHITE}>{NEON_RED}] {RESET}").strip().lower()
 
                 if command:
                     handle_command(command)
 
             except Exception as e:
-                print(f"\n{COLOR.RED}Error: {e}{COLOR.RESET}")
+                handle_exception(e)
                 continue
 
     except KeyboardInterrupt:
-        print(f"\n {COLOR.NEON_RED}[{COLOR.WHITE}!{COLOR.NEON_RED}] {COLOR.WHITE}Exiting {COLOR.NEON_RED}Fuck{COLOR.WHITE}Tool...{COLOR.RESET}")
+        print(f"\n {NEON_RED}[{WHITE}!{NEON_RED}] {WHITE}Exiting {NEON_RED}Fuck{WHITE}Tool...{RESET}")
         time.sleep(1)
         os.system('cls' if os.name == 'nt' else 'clear')
         sys.exit(0)
