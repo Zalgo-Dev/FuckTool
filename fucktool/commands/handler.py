@@ -1,7 +1,7 @@
 import os
 import sys
 import time
-from core.colors import COLOR
+from core.colors import NEON_RED, WHITE, RESET, YELLOW
 from core.header import display_header
 from commands.details import handle_details
 from commands.fakeproxy import main_fakeproxy
@@ -34,7 +34,7 @@ def handle_command(command):
     elif cmd == "fakeproxy":
         main_fakeproxy(parts)
     elif cmd == "exit":
-        print(f"\n {COLOR.NEON_RED}[{COLOR.WHITE}!{COLOR.NEON_RED}] {COLOR.WHITE}Exiting {COLOR.NEON_RED}Fuck{COLOR.WHITE}Tool...{COLOR.RESET}")
+        print(f"\n {NEON_RED}[{WHITE}!{NEON_RED}] {WHITE}Exiting {NEON_RED}Fuck{WHITE}Tool...{RESET}")
         time.sleep(1)
         os.system('cls' if os.name == 'nt' else 'clear')
         sys.exit(0)
@@ -44,5 +44,5 @@ def handle_command(command):
         handle_info(args)
     else:
         print(f"")
-        print(f"  {COLOR.YELLOW}[Error] Unknown command: \"{cmd}\"{COLOR.RESET}")
+        print(f"  {YELLOW}[Error] Unknown command: \"{cmd}\"{RESET}")
         print(f"")

@@ -2,7 +2,7 @@ import json
 import urllib.parse
 import requests
 from datetime import datetime, timezone
-from core.colors import COLOR
+from core.colors import RED, LIGHT_ORANGE, YELLOW, RESET, GRAY, WHITE, NEON_GREEN, NEON_BLUE, LIGHT_BLUE, ORANGE, CYAN, GREEN, PURPLE, LIGHT_GREEN
 
 def format_timestamp(timestamp):
     """Convertit un timestamp UNIX en une date lisible avec timezone UTC"""
@@ -13,7 +13,7 @@ def format_timestamp(timestamp):
 
 def handle_details(args):
     if len(args) < 1:
-        print(f"\n  {COLOR.RED}[{COLOR.LIGHT_ORANGE}Error{COLOR.RED}] {COLOR.YELLOW}Usage: details <ip> [--full]{COLOR.RESET}\n")
+        print(f"\n  {RED}[{LIGHT_ORANGE}Error{RED}] {YELLOW}Usage: details <ip> [--full]{RESET}\n")
         return
     
     server_ip = args[0].strip()
@@ -25,22 +25,22 @@ def handle_details(args):
     url = f"https://api.cornbread2100.com/servers?limit=100&query={encoded_query}"
 
     try:
-        print(f"\n  {COLOR.GRAY}[{COLOR.RED}#{COLOR.GRAY}]{COLOR.WHITE} Fetching server details for {COLOR.NEON_GREEN}{server_ip}{COLOR.RESET}...\n")
+        print(f"\n  {GRAY}[{RED}#{GRAY}]{WHITE} Fetching server details for {NEON_GREEN}{server_ip}{RESET}...\n")
         response = requests.get(url, timeout=60)
 
         if response.status_code != 200:
-            print(f"  {COLOR.RED}[Error]{COLOR.YELLOW} Failed to fetch server info (Status Code: {response.status_code}){COLOR.RESET}\n")
+            print(f"  {RED}[Error]{YELLOW} Failed to fetch server info (Status Code: {response.status_code}){RESET}\n")
             return
 
         data = response.json()
 
         if not isinstance(data, list) or len(data) == 0:
-            print(f"  {COLOR.RED}[Error]{COLOR.YELLOW} No data found for {server_ip}.{COLOR.RESET}\n")
+            print(f"  {RED}[Error]{YELLOW} No data found for {server_ip}.{RESET}\n")
             return
 
         # Boucle sur tous les serveurs trouvés
         for index, server in enumerate(data):
-            print(f"\n  {COLOR.NEON_BLUE}📌 Server {index + 1}/{len(data)}:{COLOR.RESET}")
+            print(f"\n  {NEON_BLUE}📌 Server {index + 1}/{len(data)}:{RESET}")
 
             ip = server.get("ip", "Unknown")
             port = server.get("port", "Unknown")
@@ -53,13 +53,13 @@ def handle_details(args):
 
             # Affichage des informations essentielles
             print(f"  {"=" * 50}")
-            print(f"  🎮 {COLOR.NEON_GREEN}Server: {ip}:{port}{COLOR.RESET}")
+            print(f"  🎮 {NEON_GREEN}Server: {ip}:{port}{RESET}")
             print(f"  {"=" * 50}")
-            print(f"  🌍 Country: {COLOR.YELLOW}{country}{COLOR.RESET}")
-            print(f"  🎮 Version: {COLOR.CYAN}{version}{COLOR.RESET}")
-            print(f"  👥 Players: {COLOR.GREEN}{online_players}{COLOR.RESET}/{COLOR.RED}{max_players}{COLOR.RESET}")
+            print(f"  🌍 Country: {YELLOW}{country}{RESET}")
+            print(f"  🎮 Version: {CYAN}{version}{RESET}")
+            print(f"  👥 Players: {GREEN}{online_players}{RESET}/{RED}{max_players}{RESET}")
             print(f"  🔓 Cracked: {'✅ Yes' if cracked else '❌ No'}")
-            print(f"  🕒 Last Seen: {COLOR.PURPLE}{last_seen}{COLOR.RESET}")
+            print(f"  🕒 Last Seen: {PURPLE}{last_seen}{RESET}")
             print(f"  {"=" * 50}")
 
             # Si l'utilisateur veut les détails complets (--full)
@@ -74,8 +74,8 @@ def handle_details(args):
                 players_list = server.get("players", {}).get("sample", [])
                 plugins = server.get("plugins", [])  # Récupération des plugins installés
 
-                print(f"  🏢 Organization: {COLOR.ORANGE}{org}{COLOR.RESET}")
-                print(f"  📍 Location: {COLOR.YELLOW}{city}, {country} (Lat: {latitude}, Lon: {longitude}){COLOR.RESET}")
+                print(f"  🏢 Organization: {ORANGE}{org}{RESET}")
+                print(f"  📍 Location: {YELLOW}{city}, {country} (Lat: {latitude}, Lon: {longitude}){RESET}")
                 print(f"  🔒 Secure Chat Enforced: {enforces_secure_chat}")
                 print(f"  🖼️ Has Favicon: {'✅ Yes' if has_favicon else '❌ No'}")
                 print(f"  🔧 Has Forge Data: {'✅ Yes' if has_forge_data else '❌ No'}")
@@ -87,7 +87,7 @@ def handle_details(args):
                     for plugin in plugins:
                         plugin_name = plugin.get("name", "Unknown")
                         plugin_version = plugin.get("version", "Unknown")
-                        print(f"    📦 {COLOR.LIGHT_BLUE}{plugin_name} {COLOR.GRAY}- {COLOR.YELLOW}v{plugin_version}{COLOR.RESET}")
+                        print(f"    📦 {LIGHT_BLUE}{plugin_name} {GRAY}- {YELLOW}v{plugin_version}{RESET}")
                     print("-" * 50)
                 else:
                     print(f"  ❌ No plugins detected.")
@@ -100,7 +100,7 @@ def handle_details(args):
                         player_name = player.get("name", "Unknown")
                         player_uuid = player.get("id", "Unknown")
                         last_seen = format_timestamp(player.get("lastSeen"))
-                        print(f"    👤 {COLOR.LIGHT_GREEN}{player_name}{COLOR.RESET} ({player_uuid}) - Last Seen: {last_seen}")
+                        print(f"    👤 {LIGHT_GREEN}{player_name}{RESET} ({player_uuid}) - Last Seen: {last_seen}")
                     print("-" * 50)
                 else:
                     print(f"  ❌ No recent player data available.")
@@ -108,4 +108,4 @@ def handle_details(args):
             print("\n")
 
     except requests.exceptions.RequestException as e:
-        print(f"  {COLOR.RED}[Error]{COLOR.YELLOW} Failed to connect to API: {e}{COLOR.RESET}\n")
+        print(f"  {RED}[Error]{YELLOW} Failed to connect to API: {e}{RESET}\n")

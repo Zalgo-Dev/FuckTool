@@ -1,37 +1,37 @@
-from core.colors import COLOR
+from core.colors import NEON_RED, RESET, LIGHT_RED, BOLD, YELLOW, GREEN, WHITE
 
 def handle_help(args=None):
     print(f"")
-    print(f" {COLOR.NEON_RED}┌{'─' * 90}┐")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.LIGHT_RED}FuckTool - Command Help{COLOR.RESET} {' ' * 63} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}├{'─' * 90}┤")
+    print(f" {NEON_RED}┌{'─' * 90}┐")
+    print(f" {NEON_RED}│{RESET}  {LIGHT_RED}FuckTool - Command Help{RESET} {' ' * 63} {NEON_RED}│")
+    print(f" {NEON_RED}├{'─' * 90}┤")
 
     # Section: Server Information
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.BOLD}{COLOR.YELLOW}Server Information:{COLOR.RESET} {' ' * 67} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}info <ip:port>{COLOR.RESET}             ➜ Get server details (Title, Players, Version, etc.) {' ' * 5} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}details <ip>{COLOR.RESET}               ➜ Get advanced server information {' ' * 24} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {' ' * 30} (Geo, Secure Chat, Forge, etc.) {' ' * 24} {COLOR.NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  {BOLD}{YELLOW}Server Information:{RESET} {' ' * 67} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  - {GREEN}info <ip:port>{RESET}             ➜ Get server details (Title, Players, Version, etc.) {' ' * 5} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  - {GREEN}details <ip>{RESET}               ➜ Get advanced server information {' ' * 24} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  {' ' * 30} (Geo, Secure Chat, Forge, etc.) {' ' * 24} {NEON_RED}│")
 
-    print(f" {COLOR.NEON_RED}│  {' ' * 86}  │{COLOR.RESET}")
+    print(f" {NEON_RED}│  {' ' * 86}  │{RESET}")
 
     # Nouvelle Section: Network Tools
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.BOLD}{COLOR.YELLOW}Network Tools:{COLOR.RESET} {' ' * 72} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}dns <ip|domain>{COLOR.RESET}            ➜ Perform DNS lookup and show records {' ' * 20} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {' ' * 30} (A, AAAA, MX, TXT, etc.) {' ' * 31} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}stress <ip:port>{COLOR.RESET}           ➜ Advanced network stress tester (500 workers max) {' ' * 7} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}    {COLOR.WHITE}--persistent{COLOR.RESET}               ➜ Maintains long-lived connections (L4) {' ' * 18} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}    {COLOR.WHITE}--minecraft{COLOR.RESET}                ➜ MC protocol flood with keep-alives (L7) {' ' * 16} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}    {COLOR.WHITE}--http{COLOR.RESET}                     ➜ HTTP flood with realistic headers {' ' * 22} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}    {COLOR.WHITE}--duration 60{COLOR.RESET}              ➜ Test duration (30-600s, default: 60) {' ' * 19} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}    {COLOR.WHITE}Note:{COLOR.RESET} Auto-HTTPS on port 443 {' ' * 56} {COLOR.NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  {BOLD}{YELLOW}Network Tools:{RESET} {' ' * 72} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  - {GREEN}dns <ip|domain>{RESET}            ➜ Perform DNS lookup and show records {' ' * 20} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  {' ' * 30} (A, AAAA, MX, TXT, etc.) {' ' * 31} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  - {GREEN}stress <ip:port>{RESET}           ➜ Advanced network stress tester (500 workers max) {' ' * 7} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}    {WHITE}--persistent{RESET}               ➜ Maintains long-lived connections (L4) {' ' * 18} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}    {WHITE}--minecraft{RESET}                ➜ MC protocol flood with keep-alives (L7) {' ' * 16} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}    {WHITE}--http{RESET}                     ➜ HTTP flood with realistic headers {' ' * 22} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}    {WHITE}--duration 60{RESET}              ➜ Test duration (30-600s, default: 60) {' ' * 19} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}    {WHITE}Note:{RESET} Auto-HTTPS on port 443 {' ' * 56} {NEON_RED}│")
 
-    print(f" {COLOR.NEON_RED}│  {' ' * 86}  │{COLOR.RESET}")
+    print(f" {NEON_RED}│  {' ' * 86}  │{RESET}")
 
-    print(f" {COLOR.NEON_RED}│  {' ' * 86}  │{COLOR.RESET}")
+    print(f" {NEON_RED}│  {' ' * 86}  │{RESET}")
 
     # Section: Utilities
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  {COLOR.BOLD}{COLOR.YELLOW}Utilities:{COLOR.RESET} {' ' * 76} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}clear{COLOR.RESET}                      ➜ Clear the screen {' ' * 39} {COLOR.NEON_RED}│")
-    print(f" {COLOR.NEON_RED}│{COLOR.RESET}  - {COLOR.GREEN}exit{COLOR.RESET}                       ➜ Quit FuckTool {' ' * 39} {COLOR.NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  {BOLD}{YELLOW}Utilities:{RESET} {' ' * 76} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  - {GREEN}clear{RESET}                      ➜ Clear the screen {' ' * 39} {NEON_RED}│")
+    print(f" {NEON_RED}│{RESET}  - {GREEN}exit{RESET}                       ➜ Quit FuckTool {' ' * 39} {NEON_RED}│")
 
-    print(f" {COLOR.NEON_RED}└{'─' * 90}┘\n")
+    print(f" {NEON_RED}└{'─' * 90}┘\n")

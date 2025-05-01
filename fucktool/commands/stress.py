@@ -3,7 +3,7 @@ import ssl
 import threading
 import time
 import random
-from core.colors import COLOR
+from core.colors import RED, GREEN, YELLOW, BLUE, WHITE, NEON_RED, RESET
 
 class StressTester:
     def __init__(self):
@@ -82,7 +82,7 @@ def handle_stress(args):
         ip, port = args[0].split(':')
         port = int(port)
     except:
-        print(f"{COLOR.RED}Invalid format. Use <ip:port>{COLOR.RESET}")
+        print(f"{RED}Invalid format. Use <ip:port>{RESET}")
         return
 
     # Enhanced parameters
@@ -95,11 +95,11 @@ def handle_stress(args):
     )
 
     # Stronger warning
-    print(f"\n{COLOR.NEON_RED}⚠️ WARNING: POTENTIALLY ILLEGAL ACTIVITY ⚠️{COLOR.RESET}")
-    print(f"Target: {COLOR.WHITE}{ip}:{port}{COLOR.RESET}")
+    print(f"\n{NEON_RED}⚠️ WARNING: POTENTIALLY ILLEGAL ACTIVITY ⚠️{RESET}")
+    print(f"Target: {WHITE}{ip}:{port}{RESET}")
     print(f"Mode: {mode.upper()} | Duration: {duration}s | Workers: {tester.max_workers}")
     
-    confirm = input(f"{COLOR.YELLOW}Type 'CONFIRM' to proceed: {COLOR.RESET}")
+    confirm = input(f"{YELLOW}Type 'CONFIRM' to proceed: {RESET}")
     if confirm != "CONFIRM":
         return
 
@@ -107,7 +107,7 @@ def handle_stress(args):
     tester.running = True
     threads = []
 
-    print(f"\n{COLOR.BLUE}Starting enhanced stress test...{COLOR.RESET}")
+    print(f"\n{BLUE}Starting enhanced stress test...{RESET}")
     
     target_func = {
         "persistent": tester.create_persistent_connection,
@@ -125,7 +125,7 @@ def handle_stress(args):
         time.sleep(duration)
     except KeyboardInterrupt:
         tester.running = False
-        print(f"{COLOR.YELLOW}\nTest stopped by user{COLOR.RESET}")
+        print(f"{YELLOW}\nTest stopped by user{RESET}")
     
     tester.running = False
-    print(f"{COLOR.GREEN}Test completed.{COLOR.RESET}")
+    print(f"{GREEN}Test completed.{RESET}")
