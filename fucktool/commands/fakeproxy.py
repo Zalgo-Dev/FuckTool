@@ -1,60 +1,42 @@
 import os
 import subprocess
-import platform
 import toml
-from core.colors import COLOR
-from colorama import init, Fore, Back, Style
-from time import sleep
+from core.colors import WHITE, BOLD, RESET, RED, GREEN, YELLOW, GRAY
 from time import strftime
 import re
 
-Black = Fore.BLACK
-Blue = Fore.BLUE
-Red = Fore.RED
-Green = Fore.GREEN
-Cyan = Fore.CYAN
-Magenta = Fore.MAGENTA
-White = Fore.WHITE
-Yellow = Fore.YELLOW
-LightWhite = Fore.LIGHTWHITE_EX
-LightBlue = Fore.LIGHTBLUE_EX
-LightGreen = Fore.LIGHTGREEN_EX
-LightRed = Fore.LIGHTRED_EX
-Bold = Style.BRIGHT
-Reset = Style.RESET_ALL
-
 def validate_fakeproxy_input(parts):
     if len(parts) < 3:
-        print(White + Bold + "\n[" + Reset + Red + Bold + "!" + Reset + White + Bold + "] Usage: fakeproxy [ServerIP] [Method]\n")
+        print(f"{WHITE}{BOLD}\n[{RESET}{RED}{BOLD}!{RESET}{WHITE}{BOLD}] Usage: fakeproxy <ip:port> [Method]\n")
         return False
     
     server_ip = parts[1]
     method = parts[2].lower()
 
-    valid_methods = ["modern", "none", "other_method"]
+    valid_methods = ["legacy", "none", "modern"]
     if method not in valid_methods:
-        print(White + Bold + "[" + Reset + Red + Bold + "#" + Reset + White + Bold + "] Incorrect method! Valid methods: 'modern', 'none', 'other_method'")
+        print(f"{GRAY}{BOLD}[{RESET}{RED}{BOLD}#{RESET}{GRAY}{BOLD}] Incorrect method! Valid methods: 'legacy', 'none', 'modern'")
         return False
 
     return True
 
 def handle_pinggy_io():
-    print(White + Bold + "[" + Reset + Green + Bold + "#" + Reset + White + Bold + "] Do you want to use pinggy.io for a public IP? (y/n)")
-    choice = input(White + Bold + "[" + Reset + Green + Bold + "#" + Reset + White + Bold + "] Enter your choice: ").lower()
+    print(f"{GRAY}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{GRAY}{BOLD}] Do you want to use pinggy.io for a public IP? (y/n)")
+    choice = input(f"{GRAY}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{GRAY}{BOLD}] Enter your choice: ").lower()
 
     if choice == 'n':
         return "skip"  # Instead of None, return a flag to indicate skipping
 
     elif choice == 'y':
-        print(White + Bold + "[" + Reset + Green + Bold + "#" + Reset + White + Bold + "] Run this SSH command in a separate terminal to obtain a public IP:\n")
+        print(f"{GRAY}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{GRAY}{BOLD}] Run this SSH command in a separate terminal to obtain a public IP:\n")
         ssh_command = " ssh -p 443 -R0:localhost:25577 tcp@a.pinggy.io"
-        print(White + Bold + "[" + Reset + Green + Bold + "#" + Reset + White + Bold + "]" f"{ssh_command}\n")
+        print(f"{WHITE}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{WHITE}{BOLD}] {ssh_command}\n")
 
-        public_url = input(White + Bold + "[" + Reset + Green + Bold + "#" + Reset + White + Bold + "] Enter the public URL obtained from pinggy.io: ").strip()
+        public_url = input(f"{WHITE}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{WHITE}{BOLD}] Enter the public URL obtained from pinggy.io: ").strip()
         public_url = public_url.replace("tcp://", "")
         domain, port = public_url.split(":")
 
-        print(White + Bold + "[" + Reset + Green + Bold + "*" + Reset + White + Bold + "]" f" Resolving public IP for: {domain}...")
+        print(f"{WHITE}{BOLD}[{RESET}{GREEN}{BOLD}*{RESET}{WHITE}{BOLD}] Resolving public IP for: {domain}...")
         nslookup_command = f"nslookup {domain}"
         result = subprocess.run(nslookup_command, capture_output=True, text=True, shell=True)
 
@@ -65,10 +47,10 @@ def handle_pinggy_io():
                     ip_line = output[i + 1].strip()
                     if "." in ip_line:
                         public_ip_with_port = f"{ip_line}:{port}"
-                        print(White + Bold + "[" + Reset + Green + Bold + "#" + Reset + White + Bold + "]" f" Public IP obtained: {public_ip_with_port}\n")
+                        print(f"{WHITE}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{WHITE}{BOLD}] Public IP obtained: {public_ip_with_port}\n")
                         return public_ip_with_port
 
-        print(White + Bold + "[" + Reset + Red + Bold + "#" + Reset + White + Bold + "] Error: Could not retrieve a valid IPv4 address from nslookup.")
+        print(f"{WHITE}{BOLD}[{RESET}{RED}{BOLD}#{RESET}{WHITE}{BOLD}] Error: Could not retrieve a valid IPv4 address from nslookup.")
         return None
     
     return None
@@ -80,10 +62,10 @@ def configure_proxy(server_ip, method):
 
 
     if not os.path.exists(proxy_config_file):
-        print(White + Bold + "[" + Reset + Red + Bold + "#" + Reset + White + Bold + "] Error: Proxy configuration file does not exist.")
+        print(f"{WHITE}{BOLD}[{RESET}{RED}{BOLD}#{RESET}{WHITE}{BOLD}] Error: Proxy configuration file does not exist.")
         return False
 
-    print(White + Bold + "[" + Reset + Green + Bold + "#" + Reset + White + Bold + "] Configuring Proxy...")
+    print(f"{WHITE}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{WHITE}{BOLD}] Configuring Proxy...")
 
     try:
         # Load existing TOML configuration
@@ -102,10 +84,10 @@ def configure_proxy(server_ip, method):
         with open(proxy_config_file, 'w') as file:
             toml.dump(config, file)
 
-        print(White + Bold + "[" + Reset + Green + Bold + "#" + Reset + White + Bold + "] Proxy configured successfully.")
+        print(f"{WHITE}{BOLD}{RESET}{GREEN}{BOLD}#{RESET}{WHITE}{BOLD}] Proxy configuRED successfully.")
 
     except Exception as e:
-        print(White + Bold + "[" + Reset + Red + Bold + "#" + Reset + White + Bold + f"] Error configuring proxy: {e}")
+        print(f"{WHITE}{BOLD}[{RESET}{RED}{BOLD}#{RESET}{WHITE}{BOLD}] Error configuring proxy: {e}")
         return False
 
     return True
@@ -129,21 +111,20 @@ def extract_velocity_log(line):
     # Matching logs
     if join_match := join_pattern.search(line):
         timestamp, user, ip = join_match.groups()
-        return f"{White}{Bold}[{Reset}{Green}{Bold}#{Reset}{White}{Bold}][{timestamp}] FakeProxy Log - {user} ({ip}) Joined the fakeproxy!"
+        return f"{WHITE}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{WHITE}{BOLD}][{timestamp}] FakeProxy Log - {user} ({ip}) Joined the fakeproxy!"
     
     elif leave_match := leave_pattern.search(line):
         timestamp, user, ip = leave_match.groups()
-        return f"{White}{Bold}[{Reset}{Green}{Bold}#{Reset}{White}{Bold}][{timestamp}] FakeProxy Log - {user} ({ip}) leaved the fakeproxy!"
+        return f"{WHITE}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{WHITE}{BOLD}][{timestamp}] FakeProxy Log - {user} ({ip}) leaved the fakeproxy!"
     
     elif command_match := command_pattern.search(line):
         timestamp, user, ip, command = command_match.groups()
-        return f"{White}{Bold}[{Reset}{Green}{Bold}#{Reset}{White}{Bold}][{timestamp}] FakeProxy Log - {user} ({ip}) executed command {Bold}{Green}{command} {Reset} on the fakeproxy!"
+        return f"{WHITE}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{WHITE}{BOLD}][{timestamp}] FakeProxy Log - {user} ({ip}) executed command {BOLD}{GREEN}{command} {RESET} on the fakeproxy!"
     
     return None  # No matching log format
 
 
 def run_velocity():
-    """Runs the Velocity proxy and captures logs."""
     base_dir = os.path.dirname(os.path.abspath(__file__))
     proxy_folder = os.path.join(base_dir, '../FakeProxy')
     velocity_path = os.path.join(proxy_folder, "velocity.jar")
@@ -154,6 +135,8 @@ def run_velocity():
 
     print(format_log("Starting Proxy..."))
 
+    process = None  # 👈 Ajout ici
+
     try:
         process = subprocess.Popen(
             ["java", "-jar", velocity_path],
@@ -163,7 +146,6 @@ def run_velocity():
             text=True,
             bufsize=1
         )
-
 
         while True:
             line = process.stdout.readline()
@@ -176,19 +158,19 @@ def run_velocity():
                 print(format_log("Velocity Proxy Started Successfully!"))
 
             if custom_log:
-                print(custom_log)  # Print only relevant logs
+                print(custom_log)
 
     except KeyboardInterrupt:
-        print(f"\n{Fore.RED}[!] CTRL+C detected. Shutting down FakeProxy...")
+        print(f"\n{RED}[!] CTRL+C detected. Shutting down FakeProxy...")
+
     finally:
-        try:
-            process.terminate()
-            process.wait(timeout=5)
-        except Exception:
-            process.kill()
-        print(f"{Fore.YELLOW}[FakeProxy] Process terminated cleanly.")
-
-
+        if process:  # 👈 Vérification que process a bien été défini
+            try:
+                process.terminate()
+                process.wait(timeout=5)
+            except Exception:
+                process.kill()
+            print(f"{YELLOW}[FakeProxy] Process terminated cleanly.")
 
 def main_fakeproxy(parts):
     if not validate_fakeproxy_input(parts):
@@ -204,27 +186,27 @@ def main_fakeproxy(parts):
         public_ip = "localhost:25577"  # Use the server's IP instead
 
     elif public_ip is None:
-        print(White + Bold + "[" + Reset + Red + Bold + "#" + Reset + White + Bold + "] No valid public IP obtained.")
-        print(White + Bold + "[" + Reset + Yellow + Bold + "#" + Reset + White + Bold + "] Do you want to retry? (y/n)")
-        choice = input(White + Bold + "[" + Reset + Yellow + Bold + "#" + Reset + White + Bold + "] Enter your choice: ").lower()
+        print(f"{WHITE}{BOLD}[{RESET}{RED}{BOLD}#{RESET}{WHITE}{BOLD}] No valid public IP obtained.")
+        print(f"{WHITE}{BOLD}[{RESET}{YELLOW}{BOLD}#{RESET}{WHITE}{BOLD}] Do you want to retry? (y/n)")
+        choice = input(f"{WHITE}{BOLD}[{RESET}{YELLOW}{BOLD}#{RESET}{WHITE}{BOLD}] Enter your choice: ").lower()
         if choice == "y":
             return main_fakeproxy(parts)  # Retry fakeproxy setup
         else:
-            print(White + Bold + "[" + Reset + Red + Bold + "#" + Reset + White + Bold + "] Returning to main menu...")
+            print(f"{WHITE}{BOLD}[{RESET}{RED}{BOLD}#{RESET}{WHITE}{BOLD}] Returning to main menu...")
             return
 
-    print(White + Bold + "[" + Reset + Green + Bold + "#" + Reset + White + Bold + "]" f" Using IP: {public_ip}")
+    print(f"{WHITE}{BOLD}[{RESET}{GREEN}{BOLD}#{RESET}{WHITE}{BOLD}] Using IP: {public_ip}")
 
     if configure_proxy(server_ip, method):
         run_velocity()
     else:
-        print(White + Bold + "[" + Reset + Red + Bold + "#" + Reset + White + Bold + "] Proxy configuration failed.")
-        print(White + Bold + "[" + Reset + Yellow + Bold + "#" + Reset + White + Bold + "] Do you want to retry? (y/n)")
-        choice = input(White + Bold + "[" + Reset + Yellow + Bold + "#" + Reset + White + Bold + "] Enter your choice: ").lower()
+        print(f"{WHITE}{BOLD}[{RESET}{RED}{BOLD}#{RESET}{WHITE}{BOLD}] Proxy configuration failed.")
+        print(f"{WHITE}{BOLD}[{RESET}{YELLOW}{BOLD}#{RESET}{WHITE}{BOLD}] Do you want to retry? (y/n)")
+        choice = input(f"{WHITE}{BOLD}[{RESET}{YELLOW}{BOLD}#{RESET}{WHITE}{BOLD}] Enter your choice: ").lower()
         if choice == "y":
             return main_fakeproxy(parts)  # Retry fakeproxy setup
         else:
-            print(White + Bold + "[" + Reset + Red + Bold + "#" + Reset + White + Bold + "] Returning to main menu...")
+            print(f"{WHITE}{BOLD}[{RESET}{RED}{BOLD}#{RESET}{WHITE}{BOLD}] Returning to main menu...")
             return
 
 # Function Completed for V 1.2.0"
