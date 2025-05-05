@@ -3,7 +3,6 @@
 import sys
 import time
 from core.colors import NEON_RED, WHITE, RESET, YELLOW
-from core.header import display_header
 
 COMMAND_REGISTRY = {}
 
