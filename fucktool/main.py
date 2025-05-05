@@ -5,13 +5,35 @@ from pathlib import Path
 import importlib
 import pkgutil
 import commands
+import setproctitle
 
 from core.colors import NEON_RED, WHITE, RESET
 from core.header import display_header
 from core.debug import handle_exception, debug_print
 from core.command_manager import get_all_commands, handle_command
 
-# Nouvelle importation du système d'input amélioré
+def set_terminal_title(title):
+    """Fonction robuste pour définir le titre du terminal"""
+    try:
+        if os.name == 'nt':  # Windows
+            os.system(f'title {title}')
+        else:  # Linux/macOS
+            if 'TERM' in os.environ and 'xterm' in os.environ['TERM']:
+                sys.stdout.write(f"\x1b]0;{title}\x07")
+            else:  # Pour les terminaux modernes
+                sys.stdout.write(f"\033]0;{title}\007")
+            sys.stdout.flush()
+    except Exception as e:
+        debug_print(f"Failed to set terminal title: {e}")
+
+# importation de setproctitle si disponible
+try:
+    import setproctitle
+    setproctitle.setproctitle("FuckTool - Terminal")
+except ImportError:
+    set_terminal_title("FuckTool - Terminal")
+
+# importation du système d'input amélioré
 try:
     from core.input_manager import get_command_input
     USE_PROMPT_TOOLKIT = True
@@ -26,7 +48,10 @@ def main():
     BASE_DIR = Path(__file__).parent
     COMMANDS = get_all_commands()
 
+    # S'assurer que le titre est bien défini au démarrage
+    set_terminal_title("FuckTool - Terminal")
     display_header()
+    
     debug_print(f"Debug mode enabled.")
     debug_print(f"Loaded commands: {get_all_commands()}\n")
 
