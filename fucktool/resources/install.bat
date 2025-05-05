@@ -85,13 +85,13 @@ powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktoo
 powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/config.py', '%INSTALL_DIR%\fucktool\config.py')"
 
 :: Commands
-for %%f in (__init__.py details.py dns.py fakeproxy.py handler.py help.py info.py stress.py) do (
+for %%f in (__init__.py clear.py details.py dns.py fakeproxy.py help.py info.py stress.py) do (
     echo [.] commands/%%f
     powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/commands/%%f', '%INSTALL_DIR%\fucktool\commands\%%f')"
 )
 
 :: Core
-for %%f in (__init__.py colors.py debug.py header.py input_manager.py) do (
+for %%f in (__init__.py colors.py command_manager.py debug.py header.py input_manager.py) do (
     echo [.] core/%%f
     powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/core/%%f', '%INSTALL_DIR%\fucktool\core\%%f')"
 )
