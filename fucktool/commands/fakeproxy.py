@@ -2,8 +2,22 @@ import os
 import subprocess
 import toml
 from core.colors import WHITE, BOLD, RESET, RED, GREEN, YELLOW, GRAY, NEON_RED
+from core.command_manager import BaseCommand, register_command
 from time import strftime
 import re
+
+@register_command
+class FakeProxyCommand(BaseCommand):
+    name = "fakeproxy"
+    description = "Start a configurable fake Velocity proxy"
+    usage = "fakeproxy <ip:port> <method: legacy|modern|none>"
+
+    def run(self, args):
+        if len(args) < 2:
+            print(f"\n {BOLD}{WHITE}[{RED}!{WHITE}] Usage: {self.usage}\n")
+            return
+        parts = ["fakeproxy"] + args
+        main_fakeproxy(parts)
 
 def validate_fakeproxy_input(parts):
     if len(parts) < 3:

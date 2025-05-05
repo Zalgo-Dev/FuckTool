@@ -3,7 +3,20 @@ import ssl
 import threading
 import time
 import random
-from core.colors import RED, GREEN, YELLOW, BLUE, WHITE, NEON_RED, RESET
+from core.colors import RED, GREEN, YELLOW, BLUE, WHITE, NEON_RED, RESET, BOLD
+from core.command_manager import BaseCommand, register_command
+
+@register_command
+class StressCommand(BaseCommand):
+    name = "stress"
+    description = "Advanced network stress tester (500 workers max)"
+    usage = "stress <ip:port> [--persistent | --minecraft | --http] [--duration <seconds>]"
+
+    def run(self, args):
+        if not args:
+            print(f"\n {BOLD}{WHITE}[{RED}!{WHITE}] Usage: {self.usage}\n")
+            return
+        handle_stress(args)
 
 class StressTester:
     def __init__(self):
