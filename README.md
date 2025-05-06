@@ -1,122 +1,133 @@
-﻿# FuckTool 🚀
+﻿# FuckTool
 
-**FuckTool** est un outil de **pentest Minecraft** avancé permettant :
-- d'analyser des serveurs,
-- de détecter des failles,
-- de simuler des stress-tests réseau.
+FuckTool is a modular Minecraft penetration testing suite, built for researchers and ethical hackers. It includes tools to analyze, stress-test, and simulate proxy behavior on Minecraft servers.
 
-> 🛡️ **Projet à but éducatif et de sécurité uniquement.** Utilisez FuckTool **seulement sur vos propres serveurs** ou avec une autorisation explicite.
+> Educational use only. You are responsible for how you use this tool.
 
 ---
 
-## ✨ Fonctionnalités principales
+## Features
 
-- 🔎 Récupération d'infos serveur Minecraft (version, forge, secure chat, etc.)
-- 🛰️ DNS Lookup complet (A, AAAA, MX, TXT...)
-- ⚡ Stress-tests avec support L4 / L7
-- 📜 Historique des commandes sauvegardé
-- 🧠 Autocomplétion dynamique (dropdown)
-- 🎨 Interface console stylisée
+- Server info gathering (MOTD, version, players, Forge, Secure Chat, etc.)
+
+- DNS lookup (A, AAAA, MX, TXT, ...)
+
+- Layer 4 and Layer 7 stress testing (TCP / Minecraft / HTTP)
+
+- Fake Velocity proxy launcher (with plugin and forwarding support)
+
+- Command-line history, autocomplete and modular CLI
+
+- Clean output and structured help system
 
 ---
+
 ![image](https://github.com/user-attachments/assets/6ff708cd-d4ae-433a-a1c7-d54e4a790384)
----
-
-## 🛠️ Installation
-
-```bash
-git clone https://github.com/votreprofil/FuckTool.git
-cd FuckTool
-```
-
-```bash
-pip install -r requirements.txt
-```
 
 ---
 
-## 🚀 Lancer FuckTool
-
-```bash
-python fucktool\main.py
-```
-
----
-
-## 📋 Commandes Disponibles (Aperçu du `help`)
-
-```text
-┌────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│  FuckTool - Command Help                                                                            │
-├────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│  Server Information:                                                                                │
-│  - info <ip:port>             ➜ Get server details (Title, Players, Version, etc.)                  │
-│  - details <ip>               ➜ Get advanced server information                                    │
-│                                (Geo, Secure Chat, Forge, etc.)                                      │
-│                                                                                                    │
-│  Network Tools:                                                                                     │
-│  - dns <ip|domain>            ➜ Perform DNS lookup and show records                                │
-│                                (A, AAAA, MX, TXT, etc.)                                             │
-│  - stress <ip:port>           ➜ Advanced network stress tester (500 workers max)                   │
-│    --persistent               ➜ Maintains long-lived connections (L4)                              │
-│    --minecraft                ➜ MC protocol flood with keep-alives (L7)                            │
-│    --http                     ➜ HTTP flood with realistic headers                                 │
-│    --duration 60              ➜ Test duration (30-600s, default: 60)                               │
-│    Note: Auto-HTTPS on port 443                                                                     │
-│                                                                                                    │
-│  Utilities:                                                                                         │
-│  - clear                      ➜ Clear the screen                                                   │
-│  - exit                       ➜ Quit FuckTool                                                      │
-└────────────────────────────────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 📂 Structure du projet
+## Project Structure
 
 ```bash
 FuckTool/
 ├── fucktool/
-│   ├── commands/
-│   │   ├── details.py
-│   │   ├── dns.py
-│   │   ├── handler.py
-│   │   ├── help.py
-│   │   ├── info.py
-│   │   └── stress.py
-│   ├── core/
-│   │   ├── colors.py
-│   │   ├── header.py
+│   ├── main.py                     # Entry point
+│   ├── config.py                   # Global constants
+│   ├── commands/                   # All CLI commands
+│   │   ├── info.py                 # Get Minecraft server info
+│   │   ├── stress.py               # Run network stress tests
+│   │   ├── dns.py                  # DNS lookup tool
+│   │   └── ...                     # More tools
+│   ├── core/                       # Internal engine (colors, header, input, etc.)
+│   │   ├── command_manager.py
 │   │   ├── input_manager.py
-│   ├── resources/
-│   │   └── fucktool.ico
-│   ├── __init__.py
-│   ├── .fucktool_history
-│   └── main.py
-├── LICENSE.md
-├── README.md
+│   │   └── ...
+│   ├── FakeProxy/                  # Velocity proxy with plugin
+│   │   ├── velocity.jar
+│   │   ├── plugins/
+│   │   └── velocity.toml
+│   └── resources/
+│       ├── fucktool.ico
+│       └── install.bat
+├── counter.py                      # (Optional utility script)
 ├── requirements.txt
-└── main.py
+├── LICENSE.md
+└── README.md
 ```
 
----
+FuckTool is organized into isolated modules:
 
-## ⚙️ Dépendances
+- `commands/` → CLI logic for each user command
 
-- Python 3.8+
+- `core/` → Console rendering, banner, input hooks
 
----
+- `FakeProxy/` → Prebuilt Velocity proxy for spoofing / IP-forward testing
 
-## ❤️ Auteur
+- `resources/` → Icons, batch tools, structure documentation
 
-Développé par **ZalgoDev**.  
-Spécialisé dans la cybersécurité et la recherche de failles.
-
----
-
-## ⚠️ Avertissement
-
-> FuckTool est destiné **exclusivement** à un usage **éthique** et **autorisé**.  
-> Utiliser cet outil sans permission explicite est **illégal** et vous expose à des poursuites.
+Every command is a Python file. To add a new command, just drop a yourcmd.py file into commands/ and register it in the command manager.
 
 ---
+
+## Installation
+
+```bash
+git clone https://github.com/Zalgo-Dev/FuckTool.git
+
+cd FuckTool
+
+pip install -r requirements.txt
+
+python fucktool/main.py
+```
+
+Alternatively, you can download the latest packaged installer from the **[releases page](https://github.com/Zalgo-Dev/FuckTool/releases)**.
+
+> Type `help` to list all commands.
+
+---
+
+## Available Commands
+
+| commands | descriptions |
+|--|---|
+| ``clear`` | - Clear the screen and re-display banner |
+| ``dns`` | - Perform DNS record lookup |
+| ``fakeproxy`` | - Launch a local Velocity proxy with config |
+| ``help`` | - Show all available commands |
+| ``info`` | - Get basic server info |
+| ``stress`` | - Run L4/L7 stress tests (up to 500 workers) |
+
+---
+
+## FakeProxy Module
+
+`fucktool/FakeProxy/` contains:
+
+- A ready-to-use [Velocity](https://papermc.io/software/velocity) proxy
+
+- A custom admin plugin (`FakeProxyAdmin`) to control behavior
+
+- A valid `forwarding.secret` for IP-forwarding simulation
+
+- Plugins folder and preconfigured TOML
+
+This makes it easy to test how a Minecraft server handles fake proxies, spoofed IPs or modified handshake packets.
+
+--
+
+## Requirements
+
++ Python 3.8+
+
+---
+
+## Author
+**Made by [ZalgoDev](https://github.com/Zalgo-Dev) – focused on security, Minecraft internals, and ethical exploitation.**
+
+---
+
+Disclaimer
+This tool is for authorized testing only.
+Using it without explicit permission on servers you do not own is illegal.
+The author is not responsible for abuse or damages.
