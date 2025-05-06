@@ -1,9 +1,12 @@
 ﻿# FuckTool
 
+![GitHub all releases downloads](https://img.shields.io/github/downloads/Zalgo-Dev/FuckTool/total)
+
 FuckTool is a modular Minecraft penetration testing suite, built for researchers and ethical hackers. It includes tools to analyze, stress-test, and simulate proxy behavior on Minecraft servers.
 
 > Educational use only. You are responsible for how you use this tool.
 
+![image](https://github.com/user-attachments/assets/6ff708cd-d4ae-433a-a1c7-d54e4a790384)
 ---
 
 ## Features
@@ -19,10 +22,6 @@ FuckTool is a modular Minecraft penetration testing suite, built for researchers
 - Command-line history, autocomplete and modular CLI
 
 - Clean output and structured help system
-
----
-
-![image](https://github.com/user-attachments/assets/6ff708cd-d4ae-433a-a1c7-d54e4a790384)
 
 ---
 
@@ -66,6 +65,8 @@ FuckTool is organized into isolated modules:
 - `resources/` → Icons, batch tools, structure documentation
 
 Every command is a Python file. To add a new command, just drop a yourcmd.py file into commands/ and register it in the command manager.
+
+📄 [How to create your own command module](docs/writing_custom_commands.md)
 
 ---
 
