@@ -1,9 +1,0 @@
-[2025-05-07 11:55:03] Current PacketSDK version: 1.0.3
-[2025-05-07 11:55:03] Your appkey: 2WAPr21KvyXVcSkC
-[2025-05-07 11:55:03] Mode: [1]Normal executable    [2]Windows service
-[2025-05-07 11:55:03] Currently automatically selected: [1]Normal executable.
-[2025-05-07 11:55:08] Async read data from disaptch server failed. Error:Une connexion existante a dû être fermée par l’hôte distant
-[2025-05-07 11:55:15] Successfully obtained server information.
-[2025-05-07 11:55:15] Connection established successfully.
-[2025-05-07 11:55:15] This device has been successfully certified.
-
