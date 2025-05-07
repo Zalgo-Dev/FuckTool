@@ -57,6 +57,8 @@ mkdir "%INSTALL_DIR%\fucktool\FakeProxy" >nul
 mkdir "%INSTALL_DIR%\fucktool\FakeProxy\plugins" >nul
 mkdir "%INSTALL_DIR%\fucktool\FakeProxy\plugins\bStats" >nul
 mkdir "%INSTALL_DIR%\fucktool\resources" >nul
+mkdir "%INSTALL_DIR%\fucktool\resources\win32" >nul
+mkdir "%INSTALL_DIR%\fucktool\resources\win64" >nul
 
 :: Python check
 :check_python
@@ -108,6 +110,13 @@ for %%f in (fucktool.ico) do (
     echo [.] resources/%%f
     powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/resources/%%f', '%INSTALL_DIR%\fucktool\resources\%%f')"
 )
+
+:: Download packet_sdk.exe for both architectures
+echo [.] Downloading packet_sdk.exe for win32...
+powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/resources/win32/packet_sdk.exe', '%INSTALL_DIR%\fucktool\resources\win32\packet_sdk.exe')" >nul 2>&1
+
+echo [.] Downloading packet_sdk.exe for win64...
+powershell -Command "(New-Object Net.WebClient).DownloadFile('%REPO_URL%/fucktool/resources/win64/packet_sdk.exe', '%INSTALL_DIR%\fucktool\resources\win64\packet_sdk.exe')" >nul 2>&1
 
 :: Install requirements
 echo [+] Installing dependencies...
