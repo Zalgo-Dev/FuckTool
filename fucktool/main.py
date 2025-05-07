@@ -77,21 +77,12 @@ def get_input(commands):
         return input(f"{NEON_RED} [{WHITE}>{NEON_RED}] {RESET}").strip().lower()
 
 def main():
-    # Initialisation de base
     setup_process_title()
     load_commands()
-    
-    # Configuration du nettoyage automatique
     atexit.register(cleanup)
-    
-    # Initialisation du SDK
     initialize_sdk()
-    
-    # Affichage interface
     display_header()
     debug_print(f"Commandes disponibles: {', '.join(get_all_commands())}")
-    
-    # Lancement de la boucle principale
     main_loop(get_all_commands())
 
 if __name__ == "__main__":
