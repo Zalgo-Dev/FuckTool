@@ -98,6 +98,7 @@ Alternatively, you can download the latest packaged installer from the **[releas
 | ``fakeproxy`` | - Launch a local Velocity proxy with config |
 | ``help`` | - Show all available commands |
 | ``info`` | - Get basic server info |
+| ``proxycheck`` | - Look if an IP / Domain is on proxy or not
 | ``stress`` | - Run L4/L7 stress tests (up to 500 workers) |
 
 ---
