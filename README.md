@@ -1,6 +1,7 @@
 ﻿# FuckTool
 
-![GitHub all releases downloads](https://img.shields.io/github/downloads/Zalgo-Dev/FuckTool/total)
+![GitHub all releases downloads](https://img.shields.io/github/downloads/Zalgo-Dev/FuckTool/total) [![VirusTotal](https://img.shields.io/badge/VirusTotal-Scanned-brightgreen?logo=virustotal&style=flat-square)](https://www.virustotal.com/gui/file/27bfec696a504a8099f59ec7866894c8e2fc291c34783ab0f67dfc4ddc80453f)
+
 
 FuckTool is a modular Minecraft penetration testing suite, built for researchers and ethical hackers. It includes tools to analyze, stress-test, and simulate proxy behavior on Minecraft servers.
 
@@ -115,7 +116,7 @@ Alternatively, you can download the latest packaged installer from the **[releas
 
 This makes it easy to test how a Minecraft server handles fake proxies, spoofed IPs or modified handshake packets.
 
---
+---
 
 ## Requirements
 

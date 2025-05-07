@@ -1,16 +1,18 @@
 import os
 import sys
 import time
-from pathlib import Path
 import importlib
 import pkgutil
+from pathlib import Path
 import commands
-import setproctitle
+import atexit
 
 from core.colors import NEON_RED, WHITE, RESET
 from core.header import display_header
 from core.debug import handle_exception, debug_print
 from core.command_manager import get_all_commands, handle_command
+from core.sdk import init_sdk, shutdown_sdk
+from config import Config
 
 def set_terminal_title(title):
     """Fonction robuste pour définir le titre du terminal"""
@@ -26,55 +28,75 @@ def set_terminal_title(title):
     except Exception as e:
         debug_print(f"Failed to set terminal title: {e}")
 
-# importation de setproctitle si disponible
-try:
-    import setproctitle
-    setproctitle.setproctitle("FuckTool - Terminal")
-except ImportError:
-    set_terminal_title("FuckTool - Terminal")
+def setup_process_title():
+    """Configure le nom du processus"""
+    try:
+        import setproctitle
+        setproctitle.setproctitle("FuckTool - Terminal")
+    except ImportError:
+        set_terminal_title("FuckTool - Terminal")
 
-# importation du système d'input amélioré
-try:
-    from core.input_manager import get_command_input
-    USE_PROMPT_TOOLKIT = True
-except ImportError:
-    USE_PROMPT_TOOLKIT = False
+def load_commands():
+    """Charge dynamiquement toutes les commandes"""
+    for loader, name, is_pkg in pkgutil.iter_modules(commands.__path__):
+        importlib.import_module(f"commands.{name}")
 
-for loader, name, is_pkg in pkgutil.iter_modules(commands.__path__):
-    importlib.import_module(f"commands.{name}")
+def initialize_sdk():
+    """Initialise le SDK et gère les erreurs"""
+    if not init_sdk(Config.PACKET_SDK_KEY):
+        debug_print("[!] SDK initialization failed")
+        return False
+    return True
 
-def main():
-    """Boucle principale du terminal"""
-    BASE_DIR = Path(__file__).parent
-    COMMANDS = get_all_commands()
+def cleanup():
+    """Nettoyage avant sortie"""
+    shutdown_sdk()
+    time.sleep(0.5)  # Laisse le temps à la fermeture
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-    # S'assurer que le titre est bien défini au démarrage
-    set_terminal_title("FuckTool - Terminal")
-    display_header()
-    
-    debug_print(f"Debug mode enabled.")
-    debug_print(f"Loaded commands: {get_all_commands()}\n")
-
+def main_loop(commands):
+    """Boucle principale de l'application"""
     try:
         while True:
             try:
-                if USE_PROMPT_TOOLKIT:
-                    command = get_command_input(COMMANDS).strip().lower()
-                else:
-                    command = input(f"{NEON_RED} [{WHITE}>{NEON_RED}] {RESET}").strip().lower()
-
+                command = get_input(commands)
                 if command:
                     handle_command(command)
-
             except Exception as e:
                 handle_exception(e)
-                continue
-
     except KeyboardInterrupt:
         print(f"\n {NEON_RED}[{WHITE}!{NEON_RED}] {WHITE}Exiting {NEON_RED}Fuck{WHITE}Tool...{RESET}")
-        time.sleep(1)
-        os.system('cls' if os.name == 'nt' else 'clear')
         sys.exit(0)
 
+def get_input(commands):
+    """Gère l'entrée utilisateur selon les capacités du système"""
+    try:
+        from core.input_manager import get_command_input
+        return get_command_input(commands).strip().lower()
+    except ImportError:
+        return input(f"{NEON_RED} [{WHITE}>{NEON_RED}] {RESET}").strip().lower()
+
+def main():
+    # Initialisation de base
+    setup_process_title()
+    load_commands()
+    
+    # Configuration du nettoyage automatique
+    atexit.register(cleanup)
+    
+    # Initialisation du SDK
+    initialize_sdk()
+    
+    # Affichage interface
+    display_header()
+    debug_print(f"Commandes disponibles: {', '.join(get_all_commands())}")
+    
+    # Lancement de la boucle principale
+    main_loop(get_all_commands())
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        handle_exception(e)
+        sys.exit(1)
