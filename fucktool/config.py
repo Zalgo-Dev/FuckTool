@@ -7,4 +7,4 @@ class Config:
     DEBUG = False  # True or False
     
     # SDK settings don't change it
-    PACKET_SDK_KEY = "2WAPr21KvyXVcSkC"
+    SDK_KEY = ""

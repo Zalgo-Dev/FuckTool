@@ -1,0 +1,29 @@
+{
+  "name": "bungee",
+  "version": "1.0.0",
+  "description": "bungee bot scanner",
+  "keywords": [
+    "bot",
+    "zalgodev",
+    "bungee",
+    "minecraft",
+    "mc",
+    "1.21",
+    "1.21.5",
+    "spigot",
+    "fabric",
+    "cheat",
+    "bukkit",
+    "nukkit"
+  ],
+  "license": "ISC",
+  "author": "ZalgoDev",
+  "type": "commonjs",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "minecraft-protocol": "^1.26.5"
+  }
+}

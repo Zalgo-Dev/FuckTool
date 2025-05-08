@@ -2,7 +2,7 @@
 
 import sys
 import time
-from core.colors import NEON_RED, WHITE, RESET, YELLOW
+from core.colors import NEON_RED, WHITE, RESET, RED, GRAY, NEON_ORANGE
 
 COMMAND_REGISTRY = {}
 
@@ -10,6 +10,7 @@ class BaseCommand:
     name = ""
     description = ""
     usage = ""
+    exemple = ""
 
     def run(self, args):
         raise NotImplementedError("run() must be implemented by subclasses")
@@ -37,9 +38,9 @@ def handle_command(command_line):
         try:
             COMMAND_REGISTRY[cmd].run(args)
         except Exception as e:
-            print(f"{YELLOW}[ERROR] {e}{RESET}")
+            print(f"\n {GRAY}[{NEON_ORANGE}ERROR{GRAY}]{RESET} {e}{RESET}\n")
     else:
-        print(f"{YELLOW}[ERROR] Unknown command: '{cmd}'{RESET}")
+        print(f"\n {WHITE}[{RED}ERROR{WHITE}]{RESET} Unknown command: '{cmd}'{RESET}\n")
 
 def get_all_commands():
     return list(COMMAND_REGISTRY.keys())
@@ -49,7 +50,8 @@ def get_command_metadata():
         {
             "name": cmd.name,
             "description": cmd.description,
-            "usage": cmd.usage
+            "usage": cmd.usage,
+            "exemple": cmd.exemple
         }
         for cmd in COMMAND_REGISTRY.values()
     ]

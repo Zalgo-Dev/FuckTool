@@ -1,21 +1,35 @@
 ```
 └── 📁FuckTool
+    └── 📁docs
+        └── getting_started.md
     └── 📁fucktool
         └── __init__.py
+        └── 📁bungee
+            └── bot.js
+            └── package-lock.json
+            └── package.json
+            └── ping.js
         └── 📁commands
             └── __init__.py
+            └── clear.py
             └── details.py
             └── dns.py
             └── fakeproxy.py
-            └── handler.py
             └── help.py
             └── info.py
+            └── proxycheck.py
+            └── scan.py
             └── stress.py
+        └── config.py
         └── 📁core
             └── __init__.py
             └── colors.py
+            └── command_manager.py
+            └── debug.py
             └── header.py
             └── input_manager.py
+            └── sdk.py
+        └── 📁externals
         └── 📁FakeProxy
             └── forwarding.secret
             └── 📁plugins
