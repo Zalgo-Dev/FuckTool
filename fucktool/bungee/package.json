@@ -1,0 +1,15 @@
+{
+  "name": "fucktool_bungeescanner",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "ZalgoDev",
+  "type": "commonjs",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "minecraft-protocol": "^1.57.0"
+  }
+}

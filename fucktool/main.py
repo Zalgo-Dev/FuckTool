@@ -12,18 +12,6 @@ import atexit
 from core.colors import NEON_RED, WHITE, RESET
 from core.header import display_header
 from core.command_manager import get_all_commands, handle_command
-from core.hgsdk import start, stop, is_running, opt_in, opt_out
-from config import Config
-
-def ask_console_consent() -> bool:
-    """Demande le consentement à l'utilisateur via la console."""
-    while True:
-        resp = input("Acceptez-vous les conditions d'utilisation de Honeygain ? [Y/n] ").strip().lower()
-        if resp in ('o', 'oui', 'y', 'yes', ''):
-            return True
-        if resp in ('n', 'non', 'no'):
-            return False
-        print("Réponse non reconnue, tapez Y pour yes ou N pour no.")
 
 def set_terminal_title(title):
     """Fonction robuste pour définir le titre du terminal"""
@@ -55,13 +43,7 @@ def load_commands():
     debug_print(f"{len(get_all_commands())} loaded commands")
 
 def cleanup():
-    """Nettoyage avant sortie"""
-    try:
-        stop()
-        debug_print("SDK arrêté proprement")
-    except Exception as e:
-        debug_print(f"Erreur à l'arrêt du SDK : {e}")
-    time.sleep(0.5)  # Laisse le temps à la fermeture
+    time.sleep(0.5)
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def main_loop(commands):
@@ -96,34 +78,12 @@ def get_input(commands):
 
 
 def main():
-    # 1. Consentement via console
-    if ask_console_consent():
-        opt_in()
-        debug_print("Consentement enregistré via la console.")
-    else:
-        opt_out()
-        debug_print("Consentement refusé via la console. Arrêt.")
-        sys.exit(1)
-
-    # 2. Démarrage du SDK
-    if start(Config.SDK_KEY):
-        debug_print("SDK démarré avec consentement utilisateur")
-    else:
-        debug_print("Échec du démarrage du SDK après consentement.")
-        sys.exit(1)
-
     # 3. Suite de l'initialisation
     setup_process_title()
     load_commands()
     atexit.register(cleanup)
     display_header()
     debug_print(f"Available commands: {', '.join(get_all_commands())}")
-
-    # 4. Vérification du service
-    if is_running():
-        debug_print("Le SDK tourne correctement")
-    else:
-        debug_print("Le SDK ne fonctionne pas, vérifie tes logs")
 
     # 5. Lancement de la boucle principale
     main_loop(get_all_commands())

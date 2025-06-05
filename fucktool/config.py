@@ -5,6 +5,3 @@ class Config:
 
     # Application settings
     DEBUG = False  # True or False
-    
-    # SDK settings don't change it
-    SDK_KEY = ""
